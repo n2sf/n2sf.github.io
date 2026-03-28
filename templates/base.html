@@ -19,7 +19,7 @@
   <meta name="twitter:description" content="국가 망 보안체계(N2SF) 보안가이드라인 1.0 기반 274개 보안통제 항목 매트릭스">
   <meta name="twitter:image" content="{{ site_url }}og_image.png">
   <link rel="icon" type="image/png" href="{{ base_path }}favicon.png">
-  <link rel="stylesheet" href="{{ base_path }}css/style.css">
+  <link rel="stylesheet" href="{{ base_path }}css/style.css?v={{ generated_at | replace(' ', '') | replace(':', '') | replace('-', '') }}">
 </head>
 <body class="{% if no_sidebar %}no-sidebar{% endif %}">
 
@@ -111,6 +111,6 @@ N2SF 보안통제 매트릭스
 
 </div>
 
-<script src="{{ base_path }}js/main.js"></script>
+<script src="{{ base_path }}js/main.js?v={{ generated_at | replace(' ', '') | replace(':', '') | replace('-', '') }}"></script>
 </body>
 </html>
