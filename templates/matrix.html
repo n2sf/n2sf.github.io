@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}N2SF 보안통제 매트릭스{% endblock %}
+
+{% block content %}
+<!-- Fixed top bar: title + filters -->
+<div class="matrix-topbar">
+  <div class="matrix-topbar-inner">
+    <div class="page-header" style="text-align: center; margin-bottom: 8px;">
+      <h1 style="margin: 0; font-size: 20px;">N2SF 보안통제 항목 매트릭스</h1>
+      <p class="subtitle" style="margin: 4px 0 0;">
+        국가 망 보안체계(N2SF) 보안가이드라인 1.0 &middot;
+        {{ metadata.total_control_groups }}개 통제그룹 &middot;
+        {{ metadata.total_controls }}개 통제항목
+      </p>
+      <p class="powered-by">Powered by <a href="https://logpresso.com" target="_blank" rel="noopener">Logpresso</a></p>
+    </div>
+    <div class="matrix-toolbar">
+      <div class="matrix-filters">
+        <label>등급 필터:</label>
+        <button class="filter-btn active" data-filter="ALL">전체</button>
+        <button class="filter-btn" data-filter="C">C 기밀</button>
+        <button class="filter-btn" data-filter="S">S 민감</button>
+        <button class="filter-btn" data-filter="O">O 공개</button>
+      </div>
+      <div class="matrix-count">
+        <span id="visible-count">{{ metadata.total_controls }}</span> / {{ metadata.total_controls }} 항목
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ATT&CK-style Matrix (scrolls independently) -->
+<div class="matrix-scroll">
+  <div class="matrix-grid">
+
+    <!-- Row 1: Chapter headers (merged) -->
+    <div class="matrix-header-row matrix-chapter-row">
+      {% for chapter in chapters %}
+      <div class="matrix-chapter-cell" style="grid-column: span {{ chapter.control_groups | length }};">
+        제{{ chapter.chapter_number }}장 {{ chapter.chapter_title }}
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Row 2: Group headers -->
+    <div class="matrix-header-row matrix-group-row">
+      {% for chapter in chapters %}
+      {% for group in chapter.control_groups %}
+      <div class="matrix-group-cell">
+        <a href="groups/{{ group.group_id }}.html">
+          <span class="group-name">{{ group.group_name }}</span>
+          <span class="group-sub">{{ group.group_name_en }}</span>
+          <span class="group-meta">{{ group.group_id }} &middot; {{ group.controls | length }}개</span>
+        </a>
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+    <!-- Row 3+: Technique columns -->
+    <div class="matrix-body-row">
+      {% for chapter in chapters %}
+      {% for group in chapter.control_groups %}
+      <div class="matrix-column">
+        {% for control in group.controls %}
+        {% if not control.parent_id %}
+        {% set children = children_map.get(control.n2sf_id, []) %}
+        <a class="matrix-cell{% if children %} has-children{% endif %}"
+           href="controls/{{ control.n2sf_id | replace('(', '_') | replace(')', '') }}.html"
+           data-c="{{ control.classification.C | lower }}"
+           data-s="{{ control.classification.S | lower }}"
+           data-o="{{ control.classification.O | lower }}">
+          <span class="cell-name">{{ control.name }}{% if children %} <span class="cell-count">({{ children | length }})</span>{% endif %}</span>
+          <span class="cell-id">{{ control.n2sf_id }}</span>
+        </a>
+        {% if children %}
+        <div class="matrix-sub-group"
+             data-parent="{{ control.n2sf_id }}">
+          {% for child in children %}
+          <a class="matrix-cell matrix-sub-cell"
+             href="controls/{{ child.n2sf_id | replace('(', '_') | replace(')', '') }}.html"
+             data-c="{{ child.classification.C | lower }}"
+             data-s="{{ child.classification.S | lower }}"
+             data-o="{{ child.classification.O | lower }}">
+            <span class="cell-name">{{ child.name }}</span>
+            <span class="cell-id">{{ child.n2sf_id }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}

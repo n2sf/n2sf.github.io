@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}N2SF 보안통제 매트릭스{% endblock %} | 로그프레소</title>
+  <meta name="description" content="{% block description %}국가 망 보안체계(N2SF) 보안가이드라인 1.0 기반 274개 보안통제 항목 매트릭스.{% endblock %}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}N2SF 보안통제 매트릭스{% endblock %} | 로그프레소">
+  <meta property="og:description" content="국가 망 보안체계(N2SF) 보안가이드라인 1.0 기반 274개 보안통제 항목 매트릭스">
+  <meta property="og:image" content="{{ site_url }}og_image.png">
+  <meta property="og:url" content="{{ canonical_url }}">
+  <meta property="og:locale" content="ko_KR">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="N2SF 보안통제 매트릭스 | 로그프레소">
+  <meta name="twitter:description" content="국가 망 보안체계(N2SF) 보안가이드라인 1.0 기반 274개 보안통제 항목 매트릭스">
+  <meta name="twitter:image" content="{{ site_url }}og_image.png">
+  <link rel="icon" type="image/png" href="{{ base_path }}favicon.png">
+  <link rel="stylesheet" href="{{ base_path }}css/style.css">
+</head>
+<body class="{% if no_sidebar %}no-sidebar{% endif %}">
+
+<!-- Header -->
+<header class="header">
+  <div class="header-title">
+    <a href="{{ base_path }}index.html">
+N2SF 보안통제 매트릭스
+    </a>
+  </div>
+  <nav class="header-nav">
+    <a href="{{ base_path }}index.html" class="{% if active_nav == 'matrix' %}active{% endif %}">매트릭스</a>
+    <a href="{{ base_path }}controls/index.html" class="{% if active_nav == 'list' %}active{% endif %}">전체 목록</a>
+    <a href="{{ base_path }}data/n2sf_controls.json" download class="nav-download">JSON 다운로드</a>
+  </nav>
+  <div class="header-right">
+    <a href="https://www.ncsc.go.kr:4018/main/cop/bbs/selectBoardArticle.do?bbsId=Notification_main&nttId=218022"
+       target="_blank" rel="noopener" class="header-source">
+      원본 출처: 국가사이버안보센터
+    </a>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="layout">
+
+  {% if not no_sidebar %}
+  <!-- Sidebar Tree Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-title">보안통제 항목</div>
+    {% for chapter in chapters %}
+    <details class="tree-chapter"{% if active_chapter == chapter.chapter_number %} open{% endif %}>
+      <summary class="tree-chapter-label">
+        제{{ chapter.chapter_number }}장 {{ chapter.chapter_title }}
+      </summary>
+      {% for group in chapter.control_groups %}
+      <details class="tree-group"{% if active_group == group.group_id %} open{% endif %}>
+        <summary class="tree-group-label{% if active_group == group.group_id %} active{% endif %}">
+          <a href="{{ base_path }}groups/{{ group.group_id }}.html">
+            <span class="tree-code">{{ group.group_id }}</span> {{ group.group_name }}
+          </a>
+        </summary>
+        <div class="tree-controls">
+          {% for control in group.controls %}
+          {% if not control.parent_id %}
+          {% set children = children_map.get(control.n2sf_id, []) %}
+          <a class="tree-control{% if active_control == control.n2sf_id %} active{% endif %}"
+             href="{{ base_path }}controls/{{ control.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+            {{ control.n2sf_id | replace('N2SF-' + group.group_id + '-', '') }}
+            {{ control.name }}
+          </a>
+          {% if children %}
+          <div class="tree-sub-controls">
+            {% for child in children %}
+            <a class="tree-control tree-sub-control{% if active_control == child.n2sf_id %} active{% endif %}"
+               href="{{ base_path }}controls/{{ child.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+              {{ child.n2sf_id | replace('N2SF-' + group.group_id + '-', '') }}
+              {{ child.name }}
+            </a>
+            {% endfor %}
+          </div>
+          {% endif %}
+          {% endif %}
+          {% endfor %}
+        </div>
+      </details>
+      {% endfor %}
+    </details>
+    {% endfor %}
+  </aside>
+  {% endif %}
+
+  <!-- Content -->
+  <main class="content">
+    {% block content %}{% endblock %}
+
+    <footer class="footer">
+      <p>
+        원본 출처:
+        <a href="https://www.ncsc.go.kr:4018/main/cop/bbs/selectBoardArticle.do?bbsId=Notification_main&nttId=218022"
+           target="_blank" rel="noopener">
+          국가 망 보안체계(N2SF) 보안가이드라인 1.0 - 국가사이버안보센터
+        </a>
+      </p>
+      <p>생성일시: {{ generated_at }}</p>
+      <p class="powered-by">Powered by <a href="https://logpresso.com" target="_blank" rel="noopener">Logpresso</a></p>
+    </footer>
+  </main>
+
+</div>
+
+<script src="{{ base_path }}js/main.js"></script>
+</body>
+</html>

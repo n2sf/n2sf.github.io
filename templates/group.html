@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}{{ group.group_id }} - {{ group.group_name }} | N2SF{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <a href="{{ base_path }}index.html">매트릭스</a>
+  <span class="sep">&rsaquo;</span>
+  <span>제{{ chapter.chapter_number }}장 {{ chapter.chapter_title }}</span>
+  <span class="sep">&rsaquo;</span>
+  <span>{{ group.group_id }}</span>
+</div>
+
+<!-- Header -->
+<div class="page-header">
+  <h1>{{ group.group_name }} ({{ group.group_name_en }}, {{ group.group_id }})</h1>
+  <p class="subtitle">{{ group.group_full_name }} &middot; {{ group.controls | length }}개 통제항목</p>
+</div>
+
+<!-- Definition -->
+{% if group.definition %}
+<div class="section">
+  <h2 class="section-title">정의</h2>
+  <p class="definition-text">{{ group.definition }}</p>
+</div>
+{% endif %}
+
+<!-- Controls Table -->
+<div class="section">
+  <h2 class="section-title">보안통제 항목 ({{ group.controls | length }})</h2>
+  <table class="controls-table">
+    <thead>
+      <tr>
+        <th style="width: 140px;">N2SF ID</th>
+        <th>소항목</th>
+        <th>보안통제설명</th>
+        <th style="width: 100px;">분류</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for control in group.controls %}
+      {% if not control.parent_id %}
+      {% set children = children_map.get(control.n2sf_id, []) %}
+      <tr>
+        <td class="id-cell">
+          <a href="{{ base_path }}controls/{{ control.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+            {{ control.n2sf_id }}
+          </a>
+        </td>
+        <td>{{ control.name }}</td>
+        <td>{{ control.description }}</td>
+        <td>
+          {% if control.classification.C %}<span class="badge badge-c">C</span>{% endif %}
+          {% if control.classification.S %}<span class="badge badge-s">S</span>{% endif %}
+          {% if control.classification.O %}<span class="badge badge-o">O</span>{% endif %}
+        </td>
+      </tr>
+      {% for child in children %}
+      <tr class="sub-control">
+        <td class="id-cell">
+          <a href="{{ base_path }}controls/{{ child.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+            {{ child.n2sf_id }}
+          </a>
+        </td>
+        <td>{{ child.name }}</td>
+        <td>{{ child.description }}</td>
+        <td>
+          {% if child.classification.C %}<span class="badge badge-c">C</span>{% endif %}
+          {% if child.classification.S %}<span class="badge badge-s">S</span>{% endif %}
+          {% if child.classification.O %}<span class="badge badge-o">O</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Implementation Examples -->
+{% if group.implementation_examples %}
+<div class="section">
+  <h2 class="section-title">구현 방법 예시</h2>
+  {% for example in group.implementation_examples %}
+  <div class="impl-example">
+    <div class="impl-example-title">{{ example.title }}</div>
+    {% if example.details %}
+    <ul class="impl-example-details">
+      {% for detail in example.details %}
+      <li>{{ detail }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<!-- Technology Summary -->
+{% if group.technology_summary %}
+<div class="section">
+  <h2 class="section-title">적용 기술 요약</h2>
+  <table class="tech-table">
+    <thead>
+      <tr>
+        <th style="width: 200px;">항목</th>
+        <th>적용 기술 또는 방식</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for entry in group.technology_summary %}
+      <tr>
+        <td>{{ entry.category }}</td>
+        <td>{{ entry.technologies }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

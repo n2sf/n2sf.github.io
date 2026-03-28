@@ -1,0 +1,12 @@
+# Generated site (rebuilt by generate_site.py)
+docs/
+
+# PDF source
+*.pdf
+
+# Claude settings
+.claude/
+
+# Python
+__pycache__/
+*.pyc

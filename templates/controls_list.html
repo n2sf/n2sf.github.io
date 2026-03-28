@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}전체 통제항목 목록 | N2SF{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1>전체 보안통제 항목 목록</h1>
+  <p class="subtitle">총 {{ all_controls | length }}개 통제항목</p>
+</div>
+
+<!-- Search -->
+<input type="text" id="controls-search" class="search-box"
+       placeholder="N2SF ID 또는 항목명으로 검색...">
+<p style="color: #616161; font-size: 13px; margin-bottom: 16px;">
+  <span id="search-count">{{ all_controls | length }}</span>개 항목 표시 중
+</p>
+
+<!-- Table -->
+<div class="section" style="padding: 0; overflow-x: auto;">
+  <table class="controls-table">
+    <thead>
+      <tr>
+        <th style="width: 130px;">N2SF ID</th>
+        <th style="width: 80px;">그룹</th>
+        <th>소항목</th>
+        <th class="hide-mobile">보안통제설명</th>
+        <th style="width: 100px;">분류</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in all_controls %}
+      <tr>
+        <td class="id-cell">
+          <a href="{{ base_path }}controls/{{ item.control.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+            {{ item.control.n2sf_id }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ base_path }}groups/{{ item.group_id }}.html">{{ item.group_id }}</a>
+        </td>
+        <td>{{ item.control.name }}</td>
+        <td class="hide-mobile">{{ item.control.description }}</td>
+        <td>
+          {% if item.control.classification.C %}<span class="badge badge-c">C</span>{% endif %}
+          {% if item.control.classification.S %}<span class="badge badge-s">S</span>{% endif %}
+          {% if item.control.classification.O %}<span class="badge badge-o">O</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

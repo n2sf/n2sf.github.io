@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}{{ control.n2sf_id }} - {{ control.name }} | N2SF{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="breadcrumb">
+  <a href="{{ base_path }}index.html">매트릭스</a>
+  <span class="sep">&rsaquo;</span>
+  <a href="{{ base_path }}groups/{{ group.group_id }}.html">{{ group.group_id }} {{ group.group_name }}</a>
+  <span class="sep">&rsaquo;</span>
+  <span>{{ control.n2sf_id }}</span>
+</div>
+
+<!-- Header -->
+<div class="page-header">
+  <h1>{{ control.n2sf_id }}: {{ control.name }}</h1>
+  <p class="subtitle">
+    {{ group.group_name }} ({{ group.group_name_en }}) &middot;
+    제{{ chapter.chapter_number }}장 {{ chapter.chapter_title }}
+  </p>
+</div>
+
+<!-- Basic Info -->
+<div class="section">
+  <h2 class="section-title">기본 정보</h2>
+  <dl class="control-meta">
+    <dt>N2SF ID</dt>
+    <dd><strong>{{ control.n2sf_id }}</strong></dd>
+
+    <dt>소항목</dt>
+    <dd>{{ control.name }}</dd>
+
+    <dt>분류 등급</dt>
+    <dd>
+      {% if control.classification.C %}<span class="badge badge-c">C 기밀</span>{% endif %}
+      {% if control.classification.S %}<span class="badge badge-s">S 민감</span>{% endif %}
+      {% if control.classification.O %}<span class="badge badge-o">O 공개</span>{% endif %}
+      {% if not control.classification.C and not control.classification.S and not control.classification.O %}
+        <span style="color: #999;">해당 없음</span>
+      {% endif %}
+    </dd>
+
+    <dt>소속 그룹</dt>
+    <dd>
+      <a href="{{ base_path }}groups/{{ group.group_id }}.html">
+        {{ group.group_id }} - {{ group.group_name }} ({{ group.group_name_en }})
+      </a>
+    </dd>
+
+    <dt>소속 챕터</dt>
+    <dd>제{{ chapter.chapter_number }}장 {{ chapter.chapter_title }}</dd>
+  </dl>
+</div>
+
+<!-- Description -->
+{% if control.description %}
+<div class="section">
+  <h2 class="section-title">보안통제 설명</h2>
+  <p class="definition-text">{{ control.description }}</p>
+</div>
+{% endif %}
+
+<!-- Parent Control -->
+{% if control.parent_id %}
+<div class="section">
+  <h2 class="section-title">상위 통제항목</h2>
+  <div class="related-controls">
+    <a class="related-control-link"
+       href="{{ base_path }}controls/{{ control.parent_id | replace('(', '_') | replace(')', '') }}.html">
+      {{ control.parent_id }}
+      {% if parent_control %} - {{ parent_control.name }}{% endif %}
+    </a>
+  </div>
+</div>
+{% endif %}
+
+<!-- Child Controls -->
+{% if child_controls %}
+<div class="section">
+  <h2 class="section-title">하위 통제항목 ({{ child_controls | length }})</h2>
+  <div class="related-controls">
+    {% for child in child_controls %}
+    <a class="related-control-link"
+       href="{{ base_path }}controls/{{ child.n2sf_id | replace('(', '_') | replace(')', '') }}.html">
+      {{ child.n2sf_id }} - {{ child.name }}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% endblock %}
