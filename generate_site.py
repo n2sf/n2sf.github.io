@@ -65,7 +65,7 @@ def generate_site():
     control_map, group_map, chapter_map, children_map = build_control_lookup(data)
 
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-    site_url = "https://n2sf.github.io/"
+    site_url = "https://n2sf.logpresso.com/"
 
     # Setup Jinja2
     env = Environment(
