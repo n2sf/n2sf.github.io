@@ -910,4 +910,142 @@ body.no-sidebar .footer {
   .hide-mobile {
     display: none;
   }
+
+  /* Content padding */
+  .content {
+    padding: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 18px;
+  }
+
+  .page-header .subtitle {
+    font-size: 12px;
+  }
+
+  .section {
+    padding: 12px;
+  }
+
+  .section-title {
+    font-size: 14px;
+  }
+
+  /* Breadcrumb wrap */
+  .breadcrumb {
+    flex-wrap: wrap;
+    font-size: 11px;
+  }
+
+  /* Control detail meta - single column */
+  .control-meta {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .control-meta dt {
+    margin-top: 8px;
+    font-size: 11px;
+    color: #999;
+  }
+
+  .control-meta dt:first-child {
+    margin-top: 0;
+  }
+
+  /* ---- Table → Card layout (mobile) ---- */
+  .controls-table thead {
+    display: none;
+  }
+
+  .controls-table,
+  .controls-table tbody {
+    display: block;
+  }
+
+  .controls-table tr {
+    display: block;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    margin-bottom: 8px;
+  }
+
+  .controls-table tr:hover td {
+    background: none;
+  }
+
+  .controls-table td {
+    display: block;
+    padding: 0;
+    border: none;
+  }
+
+  .controls-table .id-cell {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  /* Sub-control card indent */
+  .controls-table .sub-control {
+    margin-left: 16px;
+    border-left: 3px solid #bdbdbd;
+    background: #fafafa;
+  }
+
+  .controls-table .sub-control td:first-child {
+    padding-left: 0;
+  }
+
+  /* Description cell */
+  .controls-table td:nth-last-child(2) {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin: 4px 0;
+    line-height: 1.5;
+  }
+
+  /* Badge cell - last child */
+  .controls-table td:last-child {
+    margin-top: 6px;
+  }
+
+  /* Tech table - also card style */
+  .tech-table thead { display: none; }
+  .tech-table, .tech-table tbody { display: block; }
+  .tech-table tr {
+    display: block;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+  }
+  .tech-table td {
+    display: block;
+    padding: 2px 0;
+    border: none;
+  }
+  .tech-table td:first-child {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--color-text-secondary);
+  }
+  .tech-table tr:hover td { background: none; }
+
+  /* Search box full width */
+  .search-box {
+    max-width: 100%;
+  }
+
+  /* Related controls wrap */
+  .related-controls {
+    gap: 4px;
+  }
+
+  .related-control-link {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
 }
