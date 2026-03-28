@@ -10,3 +10,7 @@ docs/
 # Python
 __pycache__/
 *.pyc
+
+# NIST mapping intermediate files
+nist_mapping_progress.json
+nist_oscal_cache/

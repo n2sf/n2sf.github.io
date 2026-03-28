@@ -409,6 +409,11 @@ body.no-sidebar .footer {
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   padding: 10px 20px 8px;
+  overflow: hidden;
+}
+
+.matrix-topbar .page-header {
+  margin-bottom: 0;
 }
 
 .matrix-topbar-inner {
@@ -601,7 +606,7 @@ body.no-sidebar .footer {
 }
 
 .powered-by {
-  margin: 2px 0 0;
+  margin: 2px 0 12px;
   font-size: 11px;
   color: #999;
 }

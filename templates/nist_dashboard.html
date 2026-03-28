@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}NIST SP 800-53 매핑 분석 | N2SF{% endblock %}
+{% block description %}N2SF 274개 보안통제항목과 NIST SP 800-53 Rev 5 통제항목 간 의미적 매핑 분석 대시보드{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{{ base_path }}css/nist_dashboard.css?v={{ generated_at | replace(' ', '') | replace(':', '') | replace('-', '') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Top bar -->
+<div class="nist-topbar">
+  <div class="nist-topbar-inner">
+    <div class="page-header" style="text-align: center; margin-bottom: 8px;">
+      <h1 style="font-size: 20px; margin: 0 0 4px;">N2SF - NIST SP 800-53 매핑 분석</h1>
+      <p class="subtitle" style="margin: 0;">274개 N2SF 보안통제항목과 NIST SP 800-53 Rev 5 간 의미적 매핑</p>
+      <p class="powered-by">Powered by <a href="https://logpresso.com" target="_blank" rel="noopener">Logpresso</a></p>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="nist-stats-bar">
+      <div class="stat-item">
+        <div class="stat-value" id="stat-n2sf">274</div>
+        <div class="stat-label">N2SF 통제항목</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-nist">-</div>
+        <div class="stat-label">NIST 통제 연결</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-edges">-</div>
+        <div class="stat-label">매핑 관계</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="stat-families">-</div>
+        <div class="stat-label">NIST 패밀리</div>
+      </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="nist-toolbar">
+      <div class="nist-filter-group">
+        <label>N2SF 장:</label>
+        <button class="filter-btn active" data-chapter="ALL">전체</button>
+        <button class="filter-btn" data-chapter="1">권한</button>
+        <button class="filter-btn" data-chapter="2">인증</button>
+        <button class="filter-btn" data-chapter="3">분리</button>
+        <button class="filter-btn" data-chapter="4">통제</button>
+        <button class="filter-btn" data-chapter="5">데이터</button>
+        <button class="filter-btn" data-chapter="6">정보자산</button>
+      </div>
+      <div class="nist-filter-group">
+        <label>관련도:</label>
+        <button class="relevance-btn active" data-relevance="ALL">전체</button>
+        <button class="relevance-btn" data-relevance="high">높음</button>
+        <button class="relevance-btn" data-relevance="medium">보통</button>
+      </div>
+      <div class="nist-filter-group">
+        <input type="text" id="nist-search" class="search-box"
+               placeholder="N2SF ID 또는 NIST ID 검색..." style="max-width: 220px; margin: 0;">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main: Graph + Detail Panel -->
+<div class="nist-main">
+  <div class="nist-graph-container" id="graph-container">
+    <svg id="nist-graph"></svg>
+    <div class="graph-controls">
+      <button id="zoom-in" title="확대">+</button>
+      <button id="zoom-out" title="축소">&minus;</button>
+      <button id="zoom-reset" title="초기화">&#x27F2;</button>
+    </div>
+    <div class="graph-legend" id="graph-legend"></div>
+  </div>
+
+  <div class="nist-detail-panel" id="detail-panel">
+    <div class="panel-header">
+      <span class="panel-title" id="panel-title">상세 정보</span>
+      <button class="panel-close" id="panel-close">&times;</button>
+    </div>
+    <div class="panel-content" id="panel-content">
+      <p class="panel-hint">노드를 클릭하면 상세 매핑 정보를 볼 수 있습니다.</p>
+    </div>
+  </div>
+</div>
+
+<script>var NIST_DATA_URL = '{{ base_path }}data/nist_mapping.json';</script>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ base_path }}js/nist_dashboard.js?v={{ generated_at | replace(' ', '') | replace(':', '') | replace('-', '') }}"></script>
+{% endblock %}

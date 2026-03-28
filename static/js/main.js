@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /* ---- Classification Filter (Matrix Page) ---- */
 function initFilters() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
+  const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
   if (!filterBtns.length) return;
 
   filterBtns.forEach(function (btn) {

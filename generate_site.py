@@ -98,8 +98,16 @@ def generate_site():
         os.path.join(DOCS_DIR, "css", "style.css"),
     )
     shutil.copy2(
+        os.path.join(STATIC_DIR, "css", "nist_dashboard.css"),
+        os.path.join(DOCS_DIR, "css", "nist_dashboard.css"),
+    )
+    shutil.copy2(
         os.path.join(STATIC_DIR, "js", "main.js"),
         os.path.join(DOCS_DIR, "js", "main.js"),
+    )
+    shutil.copy2(
+        os.path.join(STATIC_DIR, "js", "nist_dashboard.js"),
+        os.path.join(DOCS_DIR, "js", "nist_dashboard.js"),
     )
     shutil.copy2(
         os.path.join(STATIC_DIR, "favicon.png"),
@@ -234,10 +242,38 @@ def generate_site():
     with open(path, "w", encoding="utf-8") as f:
         f.write(html)
 
+    # 5. NIST Mapping Dashboard page
+    nist_mapping_path = os.path.join(BASE_DIR, "nist_mapping.json")
+    has_nist = os.path.exists(nist_mapping_path)
+    if has_nist:
+        print("Generating NIST mapping dashboard...")
+        os.makedirs(os.path.join(DOCS_DIR, "nist-mapping"), exist_ok=True)
+        tmpl = env.get_template("nist_dashboard.html")
+        html = tmpl.render(
+            **common_ctx,
+            base_path="../",
+            canonical_url=site_url + "nist-mapping/index.html",
+            active_nav="nist",
+            active_group=None,
+            active_chapter=None,
+            active_control=None,
+            no_sidebar=True,
+        )
+        path = os.path.join(DOCS_DIR, "nist-mapping", "index.html")
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(html)
+
+        # Copy mapping data for client-side use
+        shutil.copy2(nist_mapping_path, os.path.join(DOCS_DIR, "data", "nist_mapping.json"))
+    else:
+        print("Skipping NIST dashboard (nist_mapping.json not found)")
+
     # Generate sitemap.xml
     print("Generating sitemap...")
     sitemap_urls.append(site_url + "index.html")
     sitemap_urls.append(site_url + "controls/index.html")
+    if has_nist:
+        sitemap_urls.append(site_url + "nist-mapping/index.html")
     for chapter in chapters:
         for group in chapter["control_groups"]:
             sitemap_urls.append(site_url + f"groups/{group['group_id']}.html")

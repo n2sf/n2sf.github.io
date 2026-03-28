@@ -20,6 +20,7 @@
   <meta name="twitter:image" content="{{ site_url }}og_image.png">
   <link rel="icon" type="image/png" href="{{ base_path }}favicon.png">
   <link rel="stylesheet" href="{{ base_path }}css/style.css?v={{ generated_at | replace(' ', '') | replace(':', '') | replace('-', '') }}">
+  {% block extra_css %}{% endblock %}
 </head>
 <body class="{% if no_sidebar %}no-sidebar{% endif %}">
 
@@ -33,6 +34,7 @@ N2SF 보안통제 매트릭스
   <nav class="header-nav">
     <a href="{{ base_path }}index.html" class="{% if active_nav == 'matrix' %}active{% endif %}">매트릭스</a>
     <a href="{{ base_path }}controls/index.html" class="{% if active_nav == 'list' %}active{% endif %}">전체 목록</a>
+    <a href="{{ base_path }}nist-mapping/index.html" class="{% if active_nav == 'nist' %}active{% endif %}">NIST 매핑</a>
     <a href="{{ base_path }}data/n2sf_controls.json" download class="nav-download">JSON 다운로드</a>
   </nav>
   <div class="header-right">
