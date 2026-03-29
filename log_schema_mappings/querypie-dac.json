@@ -1,0 +1,471 @@
+{
+  "app": {
+    "name": "쿼리파이 DAC",
+    "description": "쿼리파이 DAC 앱은 데이터베이스 접근제어 로그에 대한 전용 파서, 로그 스키마, 수집 모델, 대시보드를 제공합니다. ",
+    "tags": "#PAM"
+  },
+  "schemas": {
+    "qp-acl-change": {
+      "ko_subject": "QueryPie 권한 변경",
+      "ko_summary": "ACCESS_CONTROL_CHANGE category"
+    },
+    "qp-acl-server": {
+      "ko_subject": "QueryPie 서버 권한 변경",
+      "ko_summary": "SERVER_ACCESS_CONTROL_LOGS category"
+    },
+    "qp-activity": {
+      "ko_subject": "QueryPie 활동",
+      "ko_summary": "ACTIVITY_LOG category"
+    },
+    "qp-admin-role": {
+      "ko_subject": "QueryPie 관리자 역할",
+      "ko_summary": "ADMIN_ROLE_HISTORY category"
+    },
+    "qp-approval": {
+      "ko_subject": "QueryPie 결재",
+      "ko_summary": "APPROVAL category"
+    },
+    "qp-audit-log-export": {
+      "ko_subject": "QueryPie 감사 로그 내보내기 ",
+      "ko_summary": "AUDIT_LOG_EXPORT_HISTORY category"
+    },
+    "qp-auth": {
+      "ko_subject": "QueryPie 인증",
+      "ko_summary": "ACCOUNT_ACCESS, USER_ACCESS_HISTORY category"
+    },
+    "qp-cdc": {
+      "ko_subject": "QueryPie CDC",
+      "ko_summary": "DATA_CHANGE category"
+    },
+    "qp-db-access": {
+      "ko_subject": "QueryPie DB 접근",
+      "ko_summary": "DATABASE_ACCESS, DB_ACCESS_HISTORY category"
+    },
+    "qp-dml-snapshot": {
+      "ko_subject": "QueryPie DML 스냅샷",
+      "ko_summary": "DML_SNAPSHOT category"
+    },
+    "qp-server-access": {
+      "ko_subject": "QueryPie 서버 인증",
+      "ko_summary": "SERVER_ACCESS_HISTORY category"
+    },
+    "qp-server-audit": {
+      "ko_subject": "QueryPie 서버 감사",
+      "ko_summary": "SERVER_COMMAND_AUDIT category"
+    },
+    "qp-server-session": {
+      "ko_subject": "QueryPie 서버 세션",
+      "ko_summary": "SERVER_SESSION_LOGS category"
+    },
+    "qp-sql-audit": {
+      "ko_subject": "QueryPie SQL 감사",
+      "ko_summary": "SQL_EXECUTE, QUERY_AUDIT category"
+    },
+    "qp-system-status": {
+      "ko_subject": "QueryPie 시스템 상태",
+      "ko_summary": "SYSTEM category"
+    }
+  },
+  "mappings": {
+    "qp-acl-change": [
+      {
+        "n2sf_id": "N2SF-AC-1(2)",
+        "relevance": "high",
+        "rationale": "ACCESS_CONTROL_GRANTED·REVOKED·UPDATED 이벤트로 계정 권한의 생성·수정·회수 상태를 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "계정 및 역할 권한 변경에 대한 상세 감사기록을 남기므로 계정 관련 활동의 기록 생성·보관·분석 통제를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M1",
+        "relevance": "medium",
+        "rationale": "DB별 대상계정과 역할권한 변경 내역을 통해 데이터 접근권한이 역할 기반으로 적절히 제한·관리되는지 점검하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(3)",
+        "relevance": "high",
+        "rationale": "DB 접근제어 권한의 부여·회수·변경 이력을 사용자와 대상계정 기준으로 확인할 수 있어 불필요한 관리자성 권한의 정기 검토와 즉시 회수 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "권한 변경 수행 계정, 대상계정, 역할명, 권한목록, 시각이 기록되어 관리자급 권한 변경 행위에 대한 로깅 및 감사 근거로 직접 활용할 수 있다."
+      }
+    ],
+    "qp-activity": [
+      {
+        "n2sf_id": "N2SF-AC-1(2)",
+        "relevance": "high",
+        "rationale": "status와 target_type에 USER, CONNECTION 등의 생성·수정·삭제 활동이 남아 계정 상태 변경 모니터링을 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "high",
+        "rationale": "계정, 출발지IP, 대상 정보를 기반으로 내부 사용자의 PAM 내 활동을 지속적으로 추적하고 이상 행위를 분석할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "이 스키마 자체가 계정 주체와 대상별 활동 감사 로그를 제공하므로 계정 활동 감사 기록 생성과 보관 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "target_type에 DATA_ACCESS가 포함되어 데이터 접근 관련 활동 이력을 모니터링하고 이상 접근 징후를 확인하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "PAM의 활동 로그는 사용자별 관리 행위와 대상 변경 이력을 기록하므로 관리자 권한 실행 내역의 로깅 및 감사에 직접 활용된다."
+      }
+    ],
+    "qp-admin-role": [
+      {
+        "n2sf_id": "N2SF-AC-1(5)",
+        "relevance": "medium",
+        "rationale": "대상 계정의 관리자 역할 회수 여부를 추적하여 불필요한 관리자 권한 계정 제거 조치의 이행을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "누가 누구에게 어떤 관리자 역할을 언제 부여·회수했는지 감사 기록을 남겨 계정 관련 감사와 분석에 직접 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4",
+        "relevance": "high",
+        "rationale": "관리자 역할 부여·회수 이력을 통해 최소한의 사용자에게만 관리자 권한이 부여되었는지 직접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(3)",
+        "relevance": "high",
+        "rationale": "ROLE_GRANTED와 ROLE_REVOKED 기록으로 사용자별 관리자 권한의 부여 및 회수 현황을 주기적으로 검토할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M1",
+        "relevance": "high",
+        "rationale": "System Admin, Database Admin 등 특별권한 역할의 변경 이력을 제공하므로 특별권한 사용자 지정과 변경 통제를 확인할 수 있다."
+      }
+    ],
+    "qp-auth": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "high",
+        "rationale": "로그인 성공·실패, 잠금, 비밀번호 재설정 이력을 계정별·출발지 IP별로 확인할 수 있어 의심스러운 계정 접속 시도를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "사용자, 대상계정, 시각, 상태, 오류정보가 포함되어 계정 활동에 대한 감사 기록 생성 및 보관 여부를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-LI-2",
+        "relevance": "high",
+        "rationale": "LOCKED, FAILURE 등의 인증 이벤트가 기록되어 로그인 실패 누적에 따른 계정 잠금 정책의 적용 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "PAM 계정의 인증 이력과 잠금·해제·재설정 이벤트를 분석하면 주요 사용자 계정의 이상 징후를 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-SN-M2",
+        "relevance": "medium",
+        "rationale": "LOGIN과 LOGOUT 이벤트를 통해 세션의 생성과 종료 이력을 감사 목적으로 추적할 수 있다."
+      }
+    ],
+    "qp-db-access": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "high",
+        "rationale": "DB 접속 성공·실패, 출발지 IP, 사용자, 대상 DB 정보를 통해 의심스러운 계정 접속 시도와 이상 접근 패턴을 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "이 로그는 사용자별 DB 접속 이력과 결과를 감사 기록으로 남겨 계정 활동의 보관·분석 근거를 직접 제공한다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "high",
+        "rationale": "CONNECT/DISCONNECT, connection_uuid, connection_type 정보로 DB 세션의 생성과 종료 이력을 감사할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "누가 어떤 DB에 어떤 방식으로 접속했는지 기록하므로 주요 데이터 자원에 대한 사용 이력 모니터링을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-1",
+        "relevance": "medium",
+        "rationale": "PAM을 통한 DB 접근의 출발지 IP와 연결 유형을 확인할 수 있어 원격 DB 접속 현황을 모니터링하고 통제 점검에 활용할 수 있다."
+      }
+    ],
+    "qp-server-access": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "high",
+        "rationale": "계정별 접속 성공·실패, 출발지 IP, 대상 서버 정보를 분석해 비정상적이거나 의심스러운 계정 접속 시도를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "medium",
+        "rationale": "서버 접속과 종료 이력을 통해 계정의 세션 생성·종료 내역을 감사하여 비정상 세션 사용 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "role_name, account, protocol, src_ip 기반으로 주요 사용자나 고위험 계정의 서버 접근 행위를 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-1",
+        "relevance": "high",
+        "rationale": "PAM의 서버 접속 이력에서 사용자, 출발지 IP, 프로토콜, 접속 결과를 확인할 수 있어 원격접속 시도와 성공·실패를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-M2",
+        "relevance": "high",
+        "rationale": "CONNECT/DISCONNECT 기반의 서버 접속 로그는 원격접속 활동 기록 자체로서 보존 및 사후 감사 근거로 활용할 수 있다."
+      }
+    ],
+    "qp-server-session": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "medium",
+        "rationale": "사용자별 접속 성공 상태와 출발지IP, 대상 서버 정보를 분석하면 비정상적이거나 의심스러운 계정 접속 시도를 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "high",
+        "rationale": "세션 생성 시각, 사용자, 대상 서버, 접속 방식 정보로 계정의 세션 활동을 기록하고 비정상 접속 여부를 감사할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "역할(role)과 사용자 기반의 서버 접속 이력을 통해 주요 사용자나 고위험 계정의 활동을 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-1",
+        "relevance": "high",
+        "rationale": "PAM의 서버 세션 로그는 사용자·출발지IP·프로토콜·연결유형별 원격접속 성공 여부를 기록해 원격접속 모니터링과 통제 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-M2",
+        "relevance": "high",
+        "rationale": "서버 세션 로그 자체가 원격접속 활동의 감사 기록이므로 원격접속 로그 보존 및 사후 감사 수행을 직접 지원한다."
+      }
+    ],
+    "qp-sql-audit": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "high",
+        "rationale": "사용자별 비정상 SQL 실행, 대량 조회·반출, 평소와 다른 DB 접근을 탐지해 의심스러운 계정 활동 모니터링에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "계정, 출발지IP, DB 대상, 실행 SQL, 상태, 수행시간 등이 포함되어 계정 활동에 대한 상세 감사기록 생성과 보관·분석을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "SQL 문장, 테이블 목록, 조회 건수, 데이터 크기, EXPORT_DATA 등의 정보로 주요 데이터 사용 이력과 이상 데이터 반출 징후를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "DB 접근제어(PAM) 로그에서 사용자별 SQL 실행, 접속, 반출 행위를 기록하므로 관리자·운영자의 권한 사용 내역 감사에 직접 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-4",
+        "relevance": "medium",
+        "rationale": "원격 DB 접속 자체를 통제하는 로그는 아니지만 출발지IP와 SQL 실행 이력으로 원격 경유 관리자성 작업의 사후 추적과 점검을 지원한다."
+      }
+    ],
+    "qp-audit-log-export": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자의 감사 로그 반출 시도를 사용자 단위로 추적할 수 있어 내부 사용자 계정 활동 모니터링에 활용 가능하다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "누가 언제 감사 로그를 생성·완료·다운로드했는지 남겨 계정 관련 감사 기록의 생성과 보관 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "감사 로그 자체는 민감한 데이터 사용 이력에 해당하므로 내보내기 및 다운로드 행위를 모니터링해 이상 사용을 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "감사 로그 내보내기 수행 사용자와 상태를 기록하므로 관리자급 감사 기능 실행 내역의 로깅 및 사후 감사를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "특정 사용자의 반복적이거나 비정상적인 감사 로그 내보내기 행위를 분석해 주요 사용자 활동의 이상 징후를 파악할 수 있다."
+      }
+    ],
+    "qp-cdc": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자의 계정으로 어떤 데이터가 변경되었는지 지속 추적할 수 있어 내부 사용자 활동 모니터링에 실질적으로 도움이 된다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "user, src_ip, status, target, before/after 값으로 계정의 데이터 변경 활동에 대한 감사 기록을 생성·보관했는지 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "DB 접근제어 솔루션의 데이터 변경 로그는 사용자별 주요 데이터의 변경 전후 이력과 대상 정보를 직접 기록해 데이터 사용 모니터링에 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "관리자성 계정이 DB 데이터 변경을 수행한 내역을 남기고 감사할 수 있어 관리자 권한 사용 이력 점검을 일부 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "특정 계정의 민감 데이터 변경 행위와 출발지 IP를 분석하면 주요 사용자 계정의 이상 행위를 탐지하는 근거로 활용할 수 있다."
+      }
+    ],
+    "qp-dml-snapshot": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자의 DB 변경 활동을 사용자별·수행위치별로 지속 모니터링하여 비정상적 데이터 조작 행위를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "개인 사용자 식별자와 DB 계정 기준으로 어떤 계정이 언제 어떤 DML을 수행했는지 감사 기록을 생성·보관하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M1",
+        "relevance": "medium",
+        "rationale": "허용된 사용자와 DB 계정이 어떤 테이블·컬럼에 변경을 수행했는지 확인할 수 있어 데이터 접근 통제의 적정성 점검을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "DB 사용자, SQL, 변경유형, 변경대상, 변경건수 등을 통해 주요 데이터의 변경 이력을 직접 감사하고 이상 사용을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "PAM 기반 DB 접근제어 로그로 관리자·운영 계정의 데이터 변경 실행 내역을 추적하여 권한 사용 감사에 활용할 수 있다."
+      }
+    ],
+    "qp-server-audit": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자 계정이 어떤 서버에서 어떤 명령을 수행했는지 지속적으로 모니터링할 수 있어 내부 사용자 활동 감시에 활용 가능하다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "high",
+        "rationale": "session_log_uuid와 사용자별 명령 실행 기록을 통해 세션 단위 활동을 추적할 수 있어 세션 감사와 비정상 행위 분석을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "PAM의 서버 명령 감사 로그는 사용자·역할·서버계정별 관리자 명령 실행 내역을 직접 기록하므로 관리자 권한 사용 로깅 및 감사에 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "역할, 계정, 제한명령어, 명령결과 정보를 기반으로 주요 권한 사용자의 위험한 명령 수행이나 정책 위반 징후를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-4",
+        "relevance": "high",
+        "rationale": "원격 서버 접속 후 수행한 명령어, 실행 위치, 출발지 IP를 확인할 수 있어 원격접속을 통한 관리자 권한 사용 통제와 이력 유지 여부를 점검할 수 있다."
+      }
+    ],
+    "qp-approval": [
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "medium",
+        "rationale": "권한 요청·결재 로그 자체가 계정 및 권한 변경 관련 감사기록으로 활용되어 사후 보관과 분석을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M1",
+        "relevance": "high",
+        "rationale": "DB별 요청권한유형과 역할 권한 승인 이력을 분석하면 데이터 접근권한이 역할 기반으로 승인·통제되는지 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IV-1",
+        "relevance": "high",
+        "rationale": "DB 접근권한 요청과 결재 상태, 요청자·대상자 정보가 기록되어 계정·권한 부여 시 관리자 승인 절차 이행 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(3)",
+        "relevance": "high",
+        "rationale": "역할명과 권한목록, 대상계정, 결재 결과를 통해 사용자에게 부여되는 관리자성 DB 권한의 검토·회수 관리 근거를 제공한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M4",
+        "relevance": "medium",
+        "rationale": "어떤 DB와 계정에 어떤 역할 권한을 요청·승인했는지 확인 가능해 접근권한과 실제 정보자산 범위의 연계 통제를 지원한다."
+      }
+    ],
+    "qp-system-status": [
+      {
+        "n2sf_id": "N2SF-AU-5",
+        "relevance": "medium",
+        "rationale": "PAM 시스템의 system_type·system_status 상태 로그로 인증·접근통제 구성요소의 운영 상태 이상 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AU-5(2)",
+        "relevance": "medium",
+        "rationale": "시스템 상태 로그는 PAM 구성요소 장애나 비정상 상태를 식별해 대체 수단 필요 여부를 판단하는 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-1",
+        "relevance": "medium",
+        "rationale": "system_uuid와 system_type 정보는 PAM 관리 대상 시스템 구성요소의 식별 및 목록 현황 확인에 활용될 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-1(3)",
+        "relevance": "medium",
+        "rationale": "시스템 식별자와 상태를 지속 수집하면 PAM 구성요소 목록의 최신성과 운영 상태를 자동으로 관리하는 데 도움이 된다."
+      }
+    ],
+    "qp-acl-server": [
+      {
+        "n2sf_id": "N2SF-LP-4(3)",
+        "relevance": "high",
+        "rationale": "서버 대상 계정의 권한 부여·회수 이력을 통해 불필요한 관리자 권한의 주기적 검토와 즉시 회수 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M1",
+        "relevance": "high",
+        "rationale": "특별권한 대상 사용자 또는 그룹에 대한 서버 접근권한 변경 내역을 기록하므로 특별권한 그룹의 부여·변경 통제를 직접 감사할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-4",
+        "relevance": "high",
+        "rationale": "허용 프로토콜, 허용 IP, 접속 시간, 명령어 감사 여부 등 원격 서버접속 권한 조건 변경을 통해 관리자 원격접속 통제 설정을 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-SN-3",
+        "relevance": "medium",
+        "rationale": "권한 변경 로그에 최대허용세션수 값이 포함되어 있어 계정별 동시 접속 세션 제한 정책의 설정 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-SN-4",
+        "relevance": "medium",
+        "rationale": "세션 타임아웃 설정 변경 이력을 통해 비활동 시 세션 자동 종료 정책이 적용·변경되었는지 모니터링할 수 있다."
+      }
+    ]
+  }
+}

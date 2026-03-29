@@ -1,0 +1,99 @@
+{
+  "app": {
+    "name": "eWalker DLP",
+    "description": "eWalker DLP 앱은 eWalker DLP 로그에 대한 전용 로그 파서, 수집 모델, 대시보드를 제공합니다.",
+    "tags": "#DLP"
+  },
+  "schemas": {
+    "ewalker-dlp-file": {
+      "ko_subject": "eWalker DLP 파일 ",
+      "ko_summary": "eWalker DLP 파일 전송 탐지 로그"
+    },
+    "ewalker-dlp-perf": {
+      "ko_subject": "eWalker DLP 성능",
+      "ko_summary": "eWalker DLP 장비 성능 로그"
+    },
+    "ewalker-dlp-session": {
+      "ko_subject": "eWalker DLP 세션",
+      "ko_summary": "eWalker DLP 세션 로그"
+    }
+  },
+  "mappings": {
+    "ewalker-dlp-session": [
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "medium",
+        "rationale": "세션 단위로 사용자 계정, 서비스, 상대방, 첨부파일 및 콘텐츠 전송 내역이 남아 사용자 세션 활동 감사에 실질적으로 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "사용자, 그룹, 파일명, 파일크기, 키워드, 본문/제목 등의 기록으로 민감 데이터 사용·전송 행위를 감사하고 이상 징후를 분석할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-10",
+        "relevance": "high",
+        "rationale": "메신저·웹하드·SNS·메일 등 전송 서비스와 방향 정보가 기록되어 허용되지 않은 전송 방식 사용 여부를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "DLP 세션 로그는 사용자·출발지·목적지·서비스·탐지사유·차단사유를 통해 비인가 정보 전송 시도와 차단 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "허용·차단·탐지·미감시 사유와 세션 상세 정보가 남아 정보흐름 통제 활동의 로그 기록 및 보존 근거로 활용할 수 있다."
+      }
+    ],
+    "ewalker-dlp-file": [
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "사용자별 파일명, 파일소유자, 파일텍스트, 탐지키워드 기반으로 주요 데이터의 외부 전송 시도와 사용 이력을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M3",
+        "relevance": "medium",
+        "rationale": "Outbound 방향, 서비스, 출발지IP, 사용자 정보가 기록되어 외부로 향하는 파일 전송 활동에 대한 감사 근거로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-10",
+        "relevance": "high",
+        "rationale": "Web, Mail, Messenger, FTP, DNS 등 전송 응용과 서비스 정보가 포함되어 허용·차단된 전송 방식 제한 정책의 적용 여부를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "파일 전송 탐지 로그는 전송 파일의 내용·키워드·패턴과 차단사유를 기록하므로 비인가 정보 전송 통제를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "허용·차단 결과, 사용자, 출발지, 파일명, 정책 등 정보흐름 통제 이력이 상세히 남아 정보흐름 로그 기록 및 보존 통제를 강하게 지원한다."
+      }
+    ],
+    "ewalker-dlp-perf": [
+      {
+        "n2sf_id": "N2SF-EB-11",
+        "relevance": "medium",
+        "rationale": "이 로그는 DLP 경계 장비의 자원 고갈과 성능 저하를 탐지해 외부 경계 보호 기능의 지속 가능 여부를 점검하는 데 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "low",
+        "rationale": "성능 로그 자체는 위협 행위를 직접 보여주지 않지만 DLP 장비의 비정상 부하를 통해 경계 보안 기능 이상을 자동 탐지하는 보조 지표가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-12",
+        "relevance": "medium",
+        "rationale": "DLP 장비의 CPU·메모리·디스크 등 성능 상태를 모니터링하면 정보흐름 통제 기능이 과부하나 장애 없이 유지되는지 운영 관점에서 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M5",
+        "relevance": "medium",
+        "rationale": "장비 성능 이상 징후를 조기에 식별하면 DLP 통제 실패나 예외 상황 발생 시 자동 경고·보고 체계의 근거 데이터로 사용할 수 있다."
+      }
+    ]
+  }
+}

@@ -14,3 +14,6 @@ __pycache__/
 # NIST mapping intermediate files
 nist_mapping_progress.json
 nist_oscal_cache/
+
+# Log schema mapping intermediate files
+logschema_mapping_progress.json

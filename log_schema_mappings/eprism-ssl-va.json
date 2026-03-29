@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "ePrism SSL VA",
+    "description": "ePrism SSL VA 앱은 수산INT ePrism SSL VA 로그에 대한 전용 파서, 수집 모델, 대시보드를 제공합니다.",
+    "tags": "#SSLVA"
+  },
+  "schemas": {
+    "eprism-ssl-va-access": {
+      "ko_subject": "ePrism SSL VA 액세스",
+      "ko_summary": "사용자 웹 접속 로그"
+    },
+    "eprism-ssl-va-ssl": {
+      "ko_subject": "ePrism SSL VA SSL",
+      "ko_summary": "SSL 복호화 세션 로그"
+    }
+  },
+  "mappings": {
+    "eprism-ssl-va-access": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "계정, URL, 접속시간, 세션정보를 통해 내부 사용자의 웹 이용 행위를 지속적으로 분석하여 이상 접근을 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-5",
+        "relevance": "high",
+        "rationale": "사용자별 웹 접속의 출발지IP, 목적지IP, URL, 정책, 대응 정보를 통해 인가된 프록시 경유 통신이 강제되고 있는지 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-2",
+        "relevance": "high",
+        "rationale": "SSL VA의 사용자 웹 접속 로그는 복호화된 URL, 도메인, 경로, 정책, 대응 결과를 기록하므로 암호화된 정보흐름의 검사·통제 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "카테고리, URL, 메소드, 정책, 허용·차단 action 로그를 통해 웹 필터링 규칙 기반 정보흐름 통제의 적용 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "이 로그 자체가 사용자 웹 정보흐름의 허용·차단, 전송량, 세션 정보를 남기므로 정보흐름 통제 활동의 기록·보존 통제를 직접 지원한다."
+      }
+    ],
+    "eprism-ssl-va-ssl": [
+      {
+        "n2sf_id": "N2SF-AU-6",
+        "relevance": "medium",
+        "rationale": "서버 인증서의 주체, 발급자, 일련번호, 서명, 신뢰상태를 수집하므로 PKI 인증서의 유효성 및 신뢰 상태 점검을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "medium",
+        "rationale": "외부 SSL 통신의 도메인, TLS 버전, 암호군, 인증서 이상 상태를 분석해 비정상 외부 경계 통신을 자동 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-2",
+        "relevance": "high",
+        "rationale": "SSL 복호화 세션 로그는 복호화 성공·우회·실패와 TLS/인증서 상태를 기록하므로 암호화된 정보흐름의 확인 및 통제 적용 여부를 직접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "출발지·목적지·도메인·대응 결과가 포함된 세션 로그는 정보흐름 통제 활동의 기록·보존 및 사후 감사 근거로 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M5",
+        "relevance": "medium",
+        "rationale": "FAIL, BYPASS, UNTRUST, ERR_* 같은 필드는 복호화 통제 실패나 예외 상황을 식별해 보고 체계와 연계하는 데 유용하다."
+      }
+    ]
+  }
+}

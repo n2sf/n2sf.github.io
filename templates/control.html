@@ -89,4 +89,27 @@
   </div>
 </div>
 {% endif %}
+
+<!-- Log Schemas -->
+{% if log_schemas %}
+<div class="section">
+  <h2 class="section-title">관련 로그 스키마 ({{ log_schemas | length }})</h2>
+  <ul class="log-schema-list">
+    {% for ls in log_schemas %}
+    <li>
+      <a class="log-schema-link"
+         href="https://logpresso.store/ko/apps/{{ ls.app_code }}/log-schemas/{{ ls.schema_code }}"
+         target="_blank" rel="noopener">
+        <img class="app-icon"
+             src="https://logpresso.store/media/apps/{{ ls.app_code }}/logo.png"
+             alt="{{ ls.app_name }}">
+        <span class="log-schema-name">{{ ls.ko_subject }}</span>
+        <span class="relevance-tag {{ ls.relevance }}">{{ ls.relevance }}</span>
+        <span class="log-schema-rationale">{{ ls.rationale }}</span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 {% endblock %}

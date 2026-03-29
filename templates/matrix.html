@@ -73,6 +73,13 @@
            data-o="{{ control.classification.O | lower }}">
           <span class="cell-name">{{ control.name }}{% if children %} <span class="cell-count">({{ children | length }})</span>{% endif %}</span>
           <span class="cell-id">{{ control.n2sf_id }}</span>
+          {% if logschema_icons.get(control.n2sf_id) %}
+          <span class="cell-apps">
+            {% for app_code in logschema_icons[control.n2sf_id] %}
+            <img class="app-icon" src="https://logpresso.store/media/apps/{{ app_code }}/logo.png" alt="{{ app_code }}" title="{{ logschema_apps[app_code].name }}" loading="lazy">
+            {% endfor %}
+          </span>
+          {% endif %}
         </a>
         {% if children %}
         <div class="matrix-sub-group"
@@ -85,6 +92,13 @@
              data-o="{{ child.classification.O | lower }}">
             <span class="cell-name">{{ child.name }}</span>
             <span class="cell-id">{{ child.n2sf_id }}</span>
+            {% if logschema_icons.get(child.n2sf_id) %}
+            <span class="cell-apps">
+              {% for app_code in logschema_icons[child.n2sf_id] %}
+              <img class="app-icon" src="https://logpresso.store/media/apps/{{ app_code }}/logo.png" alt="{{ app_code }}" title="{{ logschema_apps[app_code].name }}" loading="lazy">
+              {% endfor %}
+            </span>
+            {% endif %}
           </a>
           {% endfor %}
         </div>

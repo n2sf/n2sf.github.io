@@ -1,0 +1,84 @@
+{
+  "app": {
+    "name": "eWalker WAF",
+    "description": "eWalker WAF 앱은 전용 로그 파서, 위협 대시보드와 블랙리스트 차단 연동에 필요한 확장 쿼리 명령어, AI 프롬프트를 제공합니다.",
+    "tags": "#WAF"
+  },
+  "schemas": {
+    "ewalker-waf-alert": {
+      "ko_subject": "eWalker WAF 경보",
+      "ko_summary": "logtype=1 유형"
+    },
+    "ewalker-waf-self-test": {
+      "ko_subject": "eWalker WAF 자체 점검",
+      "ko_summary": "logtype=2 유형"
+    },
+    "ewalker-waf-system": {
+      "ko_subject": "eWalker WAF 시스템",
+      "ko_summary": "logtype=3 유형"
+    }
+  },
+  "mappings": {
+    "ewalker-waf-system": [
+      {
+        "n2sf_id": "N2SF-EB-11",
+        "relevance": "medium",
+        "rationale": "시스템 로그에 기록되는 장애·복구·점검 메시지는 외부 경계 보호 장비인 WAF의 보호 기능 유지 여부를 확인하는 데 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "medium",
+        "rationale": "WAF 시스템 로그의 수준·코드·메시지를 통해 웹 경계 보안장비의 이상 상태와 위협 탐지 기능 동작 여부를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M5",
+        "relevance": "medium",
+        "rationale": "critical·emergency 등 시스템 이벤트는 정보흐름 통제 기능의 실패나 예외 상황 발생 시 경보·보고 체계 운영 근거로 사용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-4",
+        "relevance": "low",
+        "rationale": "verifying 인터페이스와 같은 시스템 점검 로그는 WAF 구성 변경 후 검증 절차가 수행되었는지 간접적으로 확인하는 데 도움을 준다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-5",
+        "relevance": "low",
+        "rationale": "WAF 자체 시스템 이벤트 로그는 비인가 변경이나 비정상 구성 상태 징후를 탐지하는 보조 증적으로 활용될 수 있다."
+      }
+    ],
+    "ewalker-waf-alert": [
+      {
+        "n2sf_id": "N2SF-EB-2",
+        "relevance": "high",
+        "rationale": "WAF 경보 로그는 외부에서 웹서비스로 유입되는 HTTP/HTTPS 요청의 공격 유형과 차단 여부를 기록하므로 서비스별 외부 통신 통제 적용 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "공격명, 분류, 정확도, 출발지IP, 대응 결과가 포함되어 외부 경계에서의 웹 공격 이상행위를 자동 탐지하는 운영 여부를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "메소드, 경로, 쿼리, 상태코드, 룰 기반 사유와 차단 동작 정보로 웹 요청 필터링 규칙에 따른 정보흐름 통제를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "이 로그는 웹 요청에 대한 탐지·차단 이벤트를 시각, 출발지, 목적지, URL 단위로 남겨 정보흐름 통제 활동의 기록 및 보존 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IS-6",
+        "relevance": "medium",
+        "rationale": "WAF가 웹 애플리케이션 경계에서 비정상 요청과 공격 시도를 탐지·차단한 경보를 제공하므로 경계 침해에 대한 즉각 대응체계 운영을 일부 지원한다."
+      }
+    ],
+    "ewalker-waf-self-test": [
+      {
+        "n2sf_id": "N2SF-IN-6",
+        "relevance": "low",
+        "rationale": "CPU·MEM·DISK·NIC·log 등 WAF 구성요소의 자체 점검 결과는 불필요한 서비스나 구성 이상 여부를 간접적으로 점검하는 보조 증적으로 활용될 수 있다."
+      }
+    ]
+  }
+}

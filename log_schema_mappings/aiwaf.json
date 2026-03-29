@@ -1,0 +1,130 @@
+{
+  "app": {
+    "name": "AIWAF",
+    "description": "AIWAF 앱은 모니터랩 AIWAF 웹방화벽에 대한 전용 로그 파서, 수집 모델, 대시보드, 확장 쿼리 명령어, 차단 연동을 지원합니다.",
+    "tags": "#WAF"
+  },
+  "schemas": {
+    "aiwaf-audit": {
+      "ko_subject": "AIWAF 감사",
+      "ko_summary": "AUDIT 로그 유형"
+    },
+    "aiwaf-detect": {
+      "ko_subject": "AIWAF 경보",
+      "ko_summary": "DETECT 로그 유형"
+    },
+    "aiwaf-perf": {
+      "ko_subject": "AIWAF 성능",
+      "ko_summary": "SYSTEM 로그 유형"
+    },
+    "aiwaf-traffic": {
+      "ko_subject": "AIWAF 트래픽",
+      "ko_summary": "TRAFFIC 로그 유형"
+    }
+  },
+  "mappings": {
+    "aiwaf-audit": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "medium",
+        "rationale": "WAF 관리 계정의 접속 이력과 출발지 정보를 분석하면 비정상적이거나 의심스러운 관리자 계정 활동을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "계정, 출발지IP, 로그인 성공 등 감사 이벤트를 통해 WAF 관리 계정 활동에 대한 감사 기록 생성과 보관 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-15",
+        "relevance": "medium",
+        "rationale": "프로그램 무결성 검사 성공과 같은 감사 이벤트는 WAF 구성요소의 무결성 검증 수행 여부를 확인하는 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "WAF 감사 로그의 로그인, 로그아웃, 관리자 설정 기록은 관리자 권한 기능 실행 내역의 로깅 및 감사에 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-M2",
+        "relevance": "medium",
+        "rationale": "출발지IP와 관리자 로그인·로그아웃 감사 로그는 WAF 원격접속 활동 기록의 수집·보존 및 사후 감사에 활용될 수 있다."
+      }
+    ],
+    "aiwaf-perf": [
+      {
+        "n2sf_id": "N2SF-EB-11",
+        "relevance": "high",
+        "rationale": "WAF 장비의 링크 상태, CPU·메모리·디스크 사용률, 웹게이트웨이 상태를 통해 외부 경계 보호 기능의 장애 여부와 지속 운영 가능성을 직접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "medium",
+        "rationale": "이 로그는 공격 자체보다 WAF 장비의 성능 이상과 게이트웨이 비정상 상태를 탐지해 외부 경계 위협 대응 체계의 이상 징후 모니터링에 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-12",
+        "relevance": "medium",
+        "rationale": "웹게이트웨이 수와 상태, 장비 자원 사용률을 통해 정보흐름 통제 기능이 과부하나 장애 상황에서도 유지되는지 운영 관점에서 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M5",
+        "relevance": "medium",
+        "rationale": "링크 다운, 게이트웨이 비정상, 자원 고갈 징후는 정보흐름 통제 실패나 예외 상황 발생 시 자동 보고·대응 체계의 근거 데이터로 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-9",
+        "relevance": "low",
+        "rationale": "WAF 장비 버전 정보는 기술지원 종료 여부나 교체 필요성을 식별하는 보조 근거로 활용할 수 있다."
+      }
+    ],
+    "aiwaf-detect": [
+      {
+        "n2sf_id": "N2SF-EB-2",
+        "relevance": "high",
+        "rationale": "WAF 경보 로그는 웹 서비스 경계에서 HTTP 요청의 출발지·목적지·포트·호스트·경로와 탐지/차단 결과를 기록해 서비스별 외부 통신 통제를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "SQL 인젝션, 취약 페이지 접근 등 웹 공격 탐지와 위험도·시그니처 정보가 포함되어 외부 경계 위협의 자동 탐지 운영 여부를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "rule_name, signature, action 필드는 웹 요청에 대한 필터링 규칙 적용과 허용·차단 결과를 보여주어 필터링 규칙 기반 정보흐름 통제를 검증하는 데 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "이 로그는 웹 요청 본문, 경로, 출발지 IP, 대응 결과 등 정보흐름 통제 활동의 상세 이력을 남겨 통제 로그 기록 및 보존 근거로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IS-6",
+        "relevance": "medium",
+        "rationale": "WAF가 웹 애플리케이션 경계 침해 시도를 탐지하고 차단·복구 등의 대응 결과를 기록하므로 격리 위반사항 대응체계의 운영 증적으로 일부 활용할 수 있다."
+      }
+    ],
+    "aiwaf-traffic": [
+      {
+        "n2sf_id": "N2SF-EB-M3",
+        "relevance": "medium",
+        "rationale": "이 로그는 보호도메인별 외부 웹 통신량과 공격 현황을 기록하므로 외부 통신 활동 감사의 근거 자료로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "공격건수, 공격자수, 공격자IP수와 트래픽 지표를 통해 웹 경계에서의 이상 행위와 공격 급증을 자동 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-1",
+        "relevance": "medium",
+        "rationale": "WAF의 웹 트래픽 및 공격 통계는 외부 공격이나 비정상 동작 상황에서 웹 정보흐름 통제 필요성을 판단하는 모니터링 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "high",
+        "rationale": "보호도메인별 트래픽량과 공격자 지표를 분석하면 비인가 또는 비정상 웹 흐름을 자동으로 탐지하는 데 직접 활용할 수 있다."
+      }
+    ]
+  }
+}

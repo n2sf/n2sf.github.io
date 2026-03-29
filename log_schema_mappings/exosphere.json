@@ -1,0 +1,373 @@
+{
+  "app": {
+    "name": "엑소스피어",
+    "description": "엑소스피어 앱은 엑소스피어 서비스에서 안티바이러스 진단, 경보, 랜섬웨어 차단, 파일 보호, DLP 로그를 수집하는 전용 수집기와 엔드포인트 설치 현황을 확장 쿼리 명령어로 제공합니다.",
+    "tags": "#EPP #DLP "
+  },
+  "schemas": {
+    "exosp-app-cloud-sync": {
+      "ko_subject": "엑소스피어 클라우드 파일 동기화",
+      "ko_summary": "애플리케이션 제어 > 클라우드 파일 동기화 제어 내역"
+    },
+    "exosp-app-file-transfer": {
+      "ko_subject": "엑소스피어 앱 파일 전송",
+      "ko_summary": "애플리케이션 제어 > 파일 반출 제어 내역"
+    },
+    "exosp-av-alert": {
+      "ko_subject": "엑소스피어 악성코드 경보",
+      "ko_summary": "안티바이러스 > 바이러스 조치 내역"
+    },
+    "exosp-av-scan": {
+      "ko_subject": "엑소스피어 악성코드 검사",
+      "ko_summary": "안티바이러스 > 예약/수동 검사 이력"
+    },
+    "exosp-device-control": {
+      "ko_subject": "엑소스피어 매체 제어",
+      "ko_summary": "매체 제어 > 디바이스 연결 차단 내역"
+    },
+    "exosp-device-file-transfer": {
+      "ko_subject": "엑소스피어 매체 파일 전송",
+      "ko_summary": "매체 제어 > 파일 반출 제어 내역"
+    },
+    "exosp-pii-finding": {
+      "ko_subject": "엑소스피어 개인정보 검출",
+      "ko_summary": "개인(민감)정보 보호 > 탐지 및 조치 내역"
+    },
+    "exosp-pii-scan": {
+      "ko_subject": "엑소스피어 개인정보 검사",
+      "ko_summary": "개인(민감)정보 보호 > 예약/수동 검사 이력"
+    },
+    "exosp-print": {
+      "ko_subject": "엑소스피어 출력",
+      "ko_summary": "출력물 제어 내역"
+    },
+    "exosp-ransomware-access": {
+      "ko_subject": "엑소스피어 랜섬웨어 파일변조 차단",
+      "ko_summary": "랜섬웨어 방지 > 보호파일 변조 차단 내역"
+    },
+    "exosp-ransomware-process": {
+      "ko_subject": "엑소스피어 랜섬웨어 실행 차단",
+      "ko_summary": "랜섬웨어 방지 > 실행 차단 내역"
+    },
+    "exosp-web-filter": {
+      "ko_subject": "엑소스피어 웹 필터",
+      "ko_summary": "웹 보호 > 악성사이트 접속 제어 내역"
+    }
+  },
+  "mappings": {
+    "exosp-av-alert": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "사용자 계정, 호스트, 부서 정보와 함께 악성코드 경보를 수집하므로 내부 사용자 활동과 연계한 이상 징후 모니터링에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "감염 파일명, 경로, 해시, 사용자 정보를 기반으로 주요 데이터 사용 과정에서 발생한 악성 행위와 이상 징후를 감사·모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M5",
+        "relevance": "low",
+        "rationale": "탐지 후 격리·치료·실패 등의 대응 결과가 기록되어 보안통제 실패나 예외 상황 발생 시 보고 및 후속조치 근거를 제공한다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "엔드포인트 안티바이러스의 악성코드 탐지명, 파일경로, 대응결과를 통해 악성코드 감염 탐지·차단 통제의 실제 이행 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "medium",
+        "rationale": "악성 또는 원치 않는 프로그램 분류(category/program)와 파일 해시 정보는 엔드포인트 내 비인가 소프트웨어 식별의 근거로 활용될 수 있다."
+      }
+    ],
+    "exosp-av-scan": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자와 단말별로 악성코드 검사 수행 및 탐지 현황을 추적해 위험 징후가 있는 내부 사용자를 모니터링하는 데 도움이 된다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "medium",
+        "rationale": "사용자·호스트별 검사 시작/종료 시각과 처리 결과가 남아 엔드포인트 보안 활동에 대한 감사 기록으로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-1(3)",
+        "relevance": "low",
+        "rationale": "호스트명, OS, 사용자 기준의 검사 이력은 보안 에이전트가 적용된 엔드포인트 현황을 자동 수집·점검하는 보조 증적으로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "엔드포인트 안티바이러스의 예약·수동 검사 이력과 탐지·격리·치료 결과를 통해 악성코드 감염 차단 통제의 수행 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "low",
+        "rationale": "검사 중 탐지된 악성 파일이나 의심 항목은 인가되지 않은 소프트웨어 또는 비정상 구성요소 존재를 간접적으로 식별하는 근거가 된다."
+      }
+    ],
+    "exosp-print": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자별 출력 행위와 차단 이력을 기반으로 비정상적이거나 과도한 출력 활동을 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DT-1",
+        "relevance": "medium",
+        "rationale": "출력 시도 주체와 대응 결과를 통해 출력 권한이 없는 사용자 또는 단말의 데이터 반출 시도가 정책에 따라 차단되었는지 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "누가 어떤 단말과 프로세스로 어떤 문서를 출력하려 했는지 추적할 수 있어 민감 데이터 사용 이력 모니터링과 이상행위 분석에 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "출력물 제어 로그의 허용·차단·워터마크 결과를 통해 인가되지 않은 정보의 인쇄 반출 시도를 탐지하고 통제 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "사용자, 부서, 호스트, 문서명, 프로세스와 함께 출력 통제 결과가 기록되어 정보흐름 통제 활동의 로그 기록 및 보존 근거로 활용할 수 있다."
+      }
+    ],
+    "exosp-pii-scan": [
+      {
+        "n2sf_id": "N2SF-DT-1",
+        "relevance": "low",
+        "rationale": "보호유형과 보호대상 파일 현황은 민감정보 파일에 대해 전송 전 보호조치 필요 여부를 판단하는 보조 증적으로 활용될 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "사용자·호스트별 개인정보 검사 수행 결과와 탐지 건수를 통해 주요 데이터의 노출 위험과 사용 현황을 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M3",
+        "relevance": "medium",
+        "rationale": "부서·사용자·검사유형별 개인정보 검사 이력은 데이터 사용 및 보호 정책의 적용 여부를 점검하는 근거로 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M1",
+        "relevance": "medium",
+        "rationale": "개인정보 탐지 파일 수와 보호 적용 여부를 통해 외부 통신 전 개인정보 노출 방지 조치의 이행 상태를 간접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "medium",
+        "rationale": "개인정보 검사 이력과 탐지·보호 결과를 통해 인가되지 않은 민감정보 포함 파일을 식별하여 전송 통제 정책 운영을 지원할 수 있다."
+      }
+    ],
+    "exosp-pii-finding": [
+      {
+        "n2sf_id": "N2SF-DU-2",
+        "relevance": "medium",
+        "rationale": "protection_type과 protection_result 필드로 개인정보 검출 파일에 암호화 등 보호조치가 적용되었는지 부분적으로 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "사용자, 부서, 호스트, 파일경로별 개인정보 검출 및 조치 이력을 수집하므로 주요 데이터 사용 현황과 이상 징후를 모니터링하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M1",
+        "relevance": "medium",
+        "rationale": "개인식별정보 유형과 파일 단위 검출 내역을 통해 외부 반출 전 개인정보 노출 위험이 있는 데이터를 식별하고 보호조치 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "엔드포인트 DLP의 개인정보 검출 파일, 검출 건수, 보호조치 결과를 통해 비인가 정보의 저장·전송 전 차단 또는 보호 적용 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "medium",
+        "rationale": "개인정보 탐지 및 조치 로그 자체가 민감정보 통제 활동의 기록으로서 정책 적용 결과를 보존·감사하는 근거가 된다."
+      }
+    ],
+    "exosp-app-cloud-sync": [
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "사용자, 부서, 호스트, 파일명, 파일경로 기준으로 민감 파일의 클라우드 사용 이력을 감사하고 이상 업로드 시도를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-12",
+        "relevance": "medium",
+        "rationale": "승인되지 않은 클라우드 스토리지 애플리케이션의 동기화 시도와 차단 내역을 통해 비인가 외부 통신용 소프트웨어 사용 제한을 간접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "제품명, 앱분류, 파일유형, 개인정보 검출 결과에 따른 PERMIT/BLOCK 로그로 필터링 규칙 기반 정보흐름 통제 적용 여부를 검증할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "클라우드 동기화 파일의 민감정보 포함 여부와 차단/허용 결과를 기록하므로 비인가 정보 전송 통제를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "클라우드 파일 동기화 허용·차단 이벤트 자체가 정보흐름 통제 활동 로그로서 기록·보존 및 사후 감사에 활용된다."
+      }
+    ],
+    "exosp-app-file-transfer": [
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "medium",
+        "rationale": "민감정보 검출 결과와 파일 반출 행위를 사용자·호스트 단위로 추적할 수 있어 주요 데이터의 사용 및 외부 반출 이상 징후 모니터링에 활용 가능하다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-10",
+        "relevance": "high",
+        "rationale": "URL, 앱분류, 제품이름, 대응 정보로 어떤 애플리케이션·전송 방식의 파일 반출이 허용 또는 차단되었는지 확인할 수 있어 전송 방식 제한 통제를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "엔드포인트 DLP의 파일 반출 제어 로그는 민감정보 포함 파일의 외부 업로드 시도와 차단 여부를 직접 확인할 수 있어 비인가 정보 전송 통제 여부를 검증하는 데 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "이 로그 자체가 사용자·단말·파일·목적지 URL 기준의 반출 허용/차단 이력을 남기므로 정보흐름 통제 활동의 기록 및 보존 통제를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "사용자, 부서, 파일유형, 개인정보 건수, 업로드 URL을 연계 분석하면 비정상적이거나 정책 우회성 반출 흐름을 자동 탐지하는 근거 데이터로 활용할 수 있다."
+      }
+    ],
+    "exosp-ransomware-access": [
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "보호파일명·경로·사용자·호스트 정보를 통해 주요 데이터에 대한 비정상 변조 시도와 차단 이력을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M4",
+        "relevance": "medium",
+        "rationale": "보호 대상 파일의 변조 차단 이벤트는 저장 데이터의 무결성 훼손 시도와 대응 여부를 확인하는 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "엔드포인트에서 랜섬웨어 프로세스의 보호파일 변조 시도를 탐지·차단한 로그이므로 악성코드 감염 차단 통제의 이행 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "medium",
+        "rationale": "변조를 시도한 프로세스명, 경로, 서명자, 해시 정보로 비인가 소프트웨어 실행 여부를 식별하고 후속 차단 정책 검증에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "medium",
+        "rationale": "일반 프로세스가 보호파일을 변조하려는 행위를 차단한 기록으로 코드의 허용 범위 밖 파일 접근 제한이 동작하는지 일부 확인할 수 있다."
+      }
+    ],
+    "exosp-device-control": [
+      {
+        "n2sf_id": "N2SF-DV-3",
+        "relevance": "high",
+        "rationale": "엔드포인트에서 USB·모바일 장치 등 특정 하드웨어 장치의 연결 차단 이력을 직접 기록하므로 장치 사용 제한 통제의 이행 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DV-4",
+        "relevance": "high",
+        "rationale": "매체 제어 로그는 포트·외부 입출력 장치 연결 시도를 차단한 내역을 제공하므로 입출력 장치 제어 통제를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DV-5",
+        "relevance": "high",
+        "rationale": "외부 장치를 통한 정보 처리·저장·전송 시도를 차단한 증적이므로 외부 정보자산 활용 제한 통제의 운영 상태를 확인하는 데 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-DV-M2",
+        "relevance": "medium",
+        "rationale": "차단된 장치의 시리얼·하드웨어 ID·사용자 정보를 통해 반입 장치에 대한 보안 검사 및 승인 절차 위반 여부를 추적할 수 있다."
+      }
+    ],
+    "exosp-device-file-transfer": [
+      {
+        "n2sf_id": "N2SF-DV-5",
+        "relevance": "high",
+        "rationale": "외부 매체의 시리얼·하드웨어 ID와 파일 반출 내역을 통해 외부 정보자산을 통한 정보 처리·전송 제한 정책 준수 여부를 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DV-M2",
+        "relevance": "medium",
+        "rationale": "반입된 이동식 장치의 식별정보와 사용자 연계 기록을 통해 외부 장치 반입 후 사용 이력을 점검하고 검사·승인 절차의 사후 증적으로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-10",
+        "relevance": "high",
+        "rationale": "매체 종류(category)와 파일 반출 허용·차단(action) 이력을 통해 USB·이동식 저장매체 등 특정 전송 방식 제한 정책의 적용 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-8",
+        "relevance": "high",
+        "rationale": "파일명·경로·크기와 함께 반출 시도에 대한 차단/허용 결과가 기록되어 비인가 정보의 매체 반출 통제를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "사용자, 호스트, 장치 식별정보와 파일 반출 통제 결과를 상세히 남겨 정보흐름 통제 활동의 로그 기록 및 보존 근거로 활용할 수 있다."
+      }
+    ],
+    "exosp-web-filter": [
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "엔드포인트의 악성사이트 접속 시도와 차단 여부를 사용자·호스트 단위로 확인할 수 있어 외부 위협 통신 발신 제한 통제를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-7",
+        "relevance": "high",
+        "rationale": "웹 필터 로그는 단말 내 호스트 기반 웹 보호 기능의 탐지·차단 결과를 보여주므로 호스트 기반 경계 보호 적용 여부를 확인하는 데 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "medium",
+        "rationale": "악성 또는 잠재적으로 원치 않는 웹사이트 접속 이벤트를 지속 수집하면 엔드포인트의 외부 통신 이상행위 탐지 자동화 근거로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "malicious_url 등 분류와 BLOCK/DETECT 결과를 통해 URL 필터링 규칙 기반 정보흐름 통제가 실제로 수행되는지 검증할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "웹사이트 접속에 대한 허용·탐지·차단 이력이 시각, 사용자, 호스트, URL 기준으로 남아 정보흐름 통제 로그 기록 및 보존을 지원한다."
+      }
+    ],
+    "exosp-ransomware-process": [
+      {
+        "n2sf_id": "N2SF-IN-15",
+        "relevance": "medium",
+        "rationale": "프로세스의 SHA256과 디지털서명 정보는 실행 파일의 해시·서명 기반 무결성 검증 및 사후 분석에 활용될 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "엔드포인트에서 랜섬웨어 프로세스의 실행을 탐지·차단한 이력은 악성코드 감염 차단 통제의 직접적인 운영 증적이 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "high",
+        "rationale": "차단된 프로세스명, 경로, 해시, 서명 정보는 비인가 소프트웨어 실행 차단 정책의 적용 여부를 확인하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "medium",
+        "rationale": "랜섬웨어 실행 자체를 차단한 로그는 악성 코드의 실행권한 제한 통제가 엔드포인트에서 동작했는지 보조적으로 확인할 수 있다."
+      }
+    ]
+  }
+}

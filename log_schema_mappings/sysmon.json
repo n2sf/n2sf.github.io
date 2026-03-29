@@ -1,0 +1,280 @@
+{
+  "app": {
+    "name": "Sysmon",
+    "description": "Sysmon 앱은 Sysmon 이벤트 로그에 대한 전용 로그 파서, 수집 모델, 대시보드, 탐지 시나리오를 제공합니다.",
+    "tags": "#EDR #Windows "
+  },
+  "schemas": {
+    "sysmon-dns-query": {
+      "ko_subject": "Sysmon DNS 쿼리",
+      "ko_summary": "이벤트 ID 22"
+    },
+    "sysmon-file-create": {
+      "ko_subject": "Sysmon 파일 생성",
+      "ko_summary": "이벤트 ID 11"
+    },
+    "sysmon-file-create-stream": {
+      "ko_subject": "Sysmon 파일 스트림 생성",
+      "ko_summary": "이벤트 ID 15"
+    },
+    "sysmon-file-create-time": {
+      "ko_subject": "Sysmon 파일 생성 시각",
+      "ko_summary": "이벤트 ID 2"
+    },
+    "sysmon-image-load": {
+      "ko_subject": "Sysmon 이미지 로드",
+      "ko_summary": "이벤트 ID 7"
+    },
+    "sysmon-network-connect": {
+      "ko_subject": "Sysmon 네트워크 접속",
+      "ko_summary": "이벤트 ID 3"
+    },
+    "sysmon-process": {
+      "ko_subject": "Sysmon 프로세스",
+      "ko_summary": "이벤트 ID 1, 5"
+    },
+    "sysmon-process-access": {
+      "ko_subject": "Sysmon 프로세스 접근",
+      "ko_summary": "이벤트 ID 10"
+    },
+    "sysmon-reg-event": {
+      "ko_subject": "Sysmon 레지스트리 이벤트",
+      "ko_summary": "이벤트 ID 12, 13, 14"
+    }
+  },
+  "mappings": {
+    "sysmon-dns-query": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "계정, 호스트, 프로세스 기준의 DNS 활동을 분석하면 내부 사용자의 비정상 네트워크 행위를 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-14",
+        "relevance": "medium",
+        "rationale": "엔드포인트에서 어떤 프로세스가 어떤 도메인에 대해 DNS 질의를 수행했는지 확인할 수 있어 비정상적 외부 DNS 사용 정황을 모니터링하는 데 도움이 된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "프로세스별 DNS 질의 도메인과 사용자·호스트 정보를 통해 악성코드의 C2·피싱·위협 인프라로 향하는 외부 위협 통신 시도를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "Sysmon DNS 쿼리 로그는 비정상 도메인, DGA 의심 패턴, 희귀 TLD 등 외부 통신 이상행위를 자동 탐지하는 기반 데이터로 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성 프로세스의 의심 도메인 조회 행위를 식별하여 악성코드 감염 징후를 탐지하고 후속 차단·대응 근거로 활용할 수 있다."
+      }
+    ],
+    "sysmon-file-create": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "low",
+        "rationale": "계정, 호스트, 프로세스별 파일 생성 활동을 수집해 내부 사용자의 비정상 행위를 간접적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-10",
+        "relevance": "medium",
+        "rationale": "파일 생성 로그의 생성 주체 계정과 프로세스를 통해 사용자별 소프트웨어 설치 파일 생성 행위를 추적하여 설치 권한 제한 준수 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성 프로세스의 드롭 파일 생성이나 시스템 경로 내 비정상 파일 생성 패턴을 분석해 악성코드 감염 징후를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "medium",
+        "rationale": "비인가 프로세스가 실행 파일이나 관련 파일을 생성하는 행위를 식별해 비인가 소프트웨어 구성요소 존재 여부를 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-5",
+        "relevance": "medium",
+        "rationale": "중요 경로에서의 파일 생성 이벤트를 모니터링하면 시스템 구성요소에 대한 인가되지 않은 변경 시도를 탐지하는 근거가 된다."
+      }
+    ],
+    "sysmon-file-create-stream": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자의 계정, 호스트, 프로세스별 인터넷 다운로드 파일 생성 행위를 지속적으로 추적해 이상 활동을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "low",
+        "rationale": "파일 경로와 생성 시각, 사용자 정보를 통해 중요 파일 반입·생성 이력을 감사하여 데이터 사용 이상 징후 분석에 보조적으로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "파일 스트림 생성 시 다운로드 URL, ZoneId, 해시를 통해 인터넷 유입 파일의 악성코드 감염 징후를 직접 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "medium",
+        "rationale": "비인가 소프트웨어 실행 자체는 아니지만 실행 전 단계인 다운로드 파일 생성과 해시 식별로 차단 정책 위반 후보를 선별할 수 있다."
+      }
+    ],
+    "sysmon-file-create-time": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "사용자 계정, 프로세스, 파일 경로 정보를 통해 내부 사용자의 비정상적인 파일 타임스탬프 조작 행위를 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DU-M4",
+        "relevance": "high",
+        "rationale": "파일의 이전/현재 생성시각을 비교할 수 있어 저장 데이터나 파일 메타데이터의 위변조 징후를 탐지하는 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성코드가 은폐를 위해 파일 생성 시각을 조작하는 경우가 있어 해당 이벤트는 감염 징후 탐지와 분석에 유용하다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-5",
+        "relevance": "high",
+        "rationale": "파일 생성 시각 변경 이벤트는 실행 파일 등의 타임스탬프 변조를 식별해 비인가 구성요소 변경 여부를 점검하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "관리자 권한으로 자주 수행되는 파일 시각 변경 행위를 계정과 프로세스 기준으로 기록해 관리자 행위 감사에 보조적으로 활용할 수 있다."
+      }
+    ],
+    "sysmon-network-connect": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "계정(user)과 프로세스(image_path) 기준의 네트워크 접속 이력을 통해 내부 사용자의 비정상 통신 활동을 지속적으로 감시할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "프로세스별 출발지·목적지 IP/포트와 사용자 정보를 통해 단말에서 외부로 발생하는 위협성 발신 통신을 직접 식별할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-7",
+        "relevance": "high",
+        "rationale": "호스트에서 실행된 프로세스의 네트워크 연결 행위를 기록하므로 호스트 기반 경계 보호 정책의 적용 여부와 우회 통신을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "허용·차단 로그는 아니지만 프로세스 단위 네트워크 흐름을 분석해 정책 우회나 비정상 정보흐름을 자동 탐지하는 근거 데이터로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-1",
+        "relevance": "medium",
+        "rationale": "원격관리 도구나 원격접속 관련 프로세스의 네트워크 연결을 식별해 단말 관점에서 원격접속 사용 여부를 모니터링할 수 있다."
+      }
+    ],
+    "sysmon-process": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "high",
+        "rationale": "사용자 계정별 프로세스 실행 활동을 지속적으로 수집하므로 내부 사용자의 행위 모니터링과 이상 징후 탐지에 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성 행위에 사용되는 비정상 프로세스 실행, 의심 명령줄, 알려진 악성 해시를 탐지해 악성코드 감염 징후 분석을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "high",
+        "rationale": "실행 파일명, 경로, 해시, 제조사 정보를 통해 허가되지 않은 소프트웨어의 실행 여부를 식별하고 통제 정책 준수 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "프로세스 생성·종료 시 계정, 명령줄, 무결성수준을 기록하므로 관리자 권한 실행 내역의 로깅과 감사에 직접 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "high",
+        "rationale": "실행 프로세스의 무결성수준, 부모-자식 관계, 실행 경로를 통해 과도한 권한으로 실행되거나 권한 상승이 의심되는 코드 실행을 모니터링할 수 있다."
+      }
+    ],
+    "sysmon-process-access": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자 계정이 어떤 프로세스를 통해 다른 프로세스에 접근했는지 추적할 수 있어 내부 사용자 활동 모니터링 근거로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성코드가 다른 프로세스에 핸들을 열거나 메모리 접근을 시도하는 행위를 Sysmon 이벤트 10으로 포착해 감염 징후 탐지에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IS-6",
+        "relevance": "medium",
+        "rationale": "정상적이지 않은 프로세스 간 접근 시도를 탐지함으로써 프로세스 격리 위반 징후에 대한 경고와 대응 근거를 제공한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "high",
+        "rationale": "프로세스 접근 로그는 사용자 권한 프로세스가 관리자 권한 또는 민감 프로세스에 접근하는 행위를 식별해 코드 실행권한 제한 위반 여부를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "high",
+        "rationale": "접근 주체 계정, 원본 프로세스, 대상 프로세스를 함께 기록하므로 주요 사용자나 고위험 계정의 비정상 프로세스 접근 활동을 탐지하는 데 유용하다."
+      }
+    ],
+    "sysmon-reg-event": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "내부 사용자 계정과 연계된 레지스트리 변경 활동을 지속 모니터링하여 비정상적 사용자 행위를 탐지하는 데 도움이 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-10",
+        "relevance": "medium",
+        "rationale": "소프트웨어 설치 시 수반되는 실행·자동실행·서비스 관련 레지스트리 변경을 통해 설치 권한 오남용 정황을 간접적으로 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-5",
+        "relevance": "high",
+        "rationale": "Sysmon 레지스트리 이벤트는 프로세스별 레지스트리 생성·수정·삭제 행위를 기록하므로 시스템 구성의 비인가 변경 여부를 직접 추적할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "관리자 권한으로 실행된 프로세스가 중요 레지스트리를 변경한 내역을 사용자·프로세스 기준으로 감사하는 근거 로그로 활용할 수 있다."
+      }
+    ],
+    "sysmon-image-load": [
+      {
+        "n2sf_id": "N2SF-IN-12",
+        "relevance": "high",
+        "rationale": "DLL 제조사와 서명자 정보를 통해 신뢰된 공급자 또는 서명된 구성요소만 로드되는지 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-15",
+        "relevance": "high",
+        "rationale": "이미지 로드 로그는 DLL의 해시와 서명 상태를 제공하므로 설치·로드된 구성요소의 무결성 검증 여부를 직접 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성 DLL이나 DLL 하이재킹 징후를 프로세스별 모듈 로드 행위로 탐지해 악성코드 감염 징후 분석을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "high",
+        "rationale": "비정상 경로, 미서명 DLL, 알려지지 않은 해시의 모듈 로드를 탐지하여 비인가 소프트웨어 구성요소 식별에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "medium",
+        "rationale": "어떤 계정과 프로세스가 어떤 DLL을 로드했는지 확인할 수 있어 비정상 코드 실행이나 권한 경계를 넘는 실행 징후 점검에 도움이 된다."
+      }
+    ]
+  }
+}

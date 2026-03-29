@@ -56,6 +56,63 @@ def build_control_lookup(data: dict) -> dict:
     return control_map, group_map, chapter_map, children_map
 
 
+LOGSCHEMA_DIR = os.path.join(BASE_DIR, "log_schema_mappings")
+
+
+def load_logschema_mapping():
+    """Load log schema mappings from per-app JSON files.
+
+    Reads all JSON files in log_schema_mappings/ directory and merges them.
+
+    Returns:
+        logschema_apps: dict of app_code -> {name, description}
+        logschema_icons: dict of n2sf_id -> [app_codes] (deduplicated)
+        logschema_by_control: dict of n2sf_id -> [schema detail dicts]
+    """
+    if not os.path.isdir(LOGSCHEMA_DIR):
+        return {}, {}, {}
+
+    apps = {}
+    all_details = {}
+    all_apps_per_control = {}
+
+    for fn in sorted(os.listdir(LOGSCHEMA_DIR)):
+        if not fn.endswith(".json"):
+            continue
+        app_code = fn[:-5]
+
+        with open(os.path.join(LOGSCHEMA_DIR, fn), "r", encoding="utf-8") as f:
+            data = json.load(f)
+
+        app_info = data.get("app", {})
+        apps[app_code] = app_info
+        schemas = data.get("schemas", {})
+
+        for sc, controls in data.get("mappings", {}).items():
+            schema_info = schemas.get(sc, {})
+            for cm in controls:
+                nid = cm["n2sf_id"]
+                if nid not in all_details:
+                    all_details[nid] = []
+                    all_apps_per_control[nid] = set()
+                all_apps_per_control[nid].add(app_code)
+                all_details[nid].append({
+                    "schema_code": sc,
+                    "app_code": app_code,
+                    "app_name": app_info.get("name", app_code),
+                    "ko_subject": schema_info.get("ko_subject", sc),
+                    "ko_summary": schema_info.get("ko_summary", ""),
+                    "relevance": cm.get("relevance", ""),
+                    "rationale": cm.get("rationale", ""),
+                })
+
+    logschema_icons = {
+        nid: sorted(codes) for nid, codes in all_apps_per_control.items()
+    }
+
+    return apps, logschema_icons, all_details
+
+
 def generate_site():
     """Main site generation function."""
     print("Loading data...")
@@ -66,6 +123,13 @@ def generate_site():
 
     generated_at = datetime.now().strftime("%Y-%m-%d %H:%M")
     site_url = "https://n2sf.logpresso.com/"
+
+    # Load log schema mapping
+    logschema_apps, logschema_icons, logschema_by_control = load_logschema_mapping()
+    if logschema_apps:
+        print(f"  Loaded log schema mappings: {len(logschema_by_control)} controls, {len(logschema_apps)} apps")
+    else:
+        print("  No log schema mapping found (logschema_mapping.json)")
 
     # Setup Jinja2
     env = Environment(
@@ -147,6 +211,8 @@ def generate_site():
         active_chapter=None,
         active_control=None,
         no_sidebar=True,
+        logschema_icons=logschema_icons,
+        logschema_apps=logschema_apps,
     )
     with open(os.path.join(DOCS_DIR, "index.html"), "w", encoding="utf-8") as f:
         f.write(html)
@@ -205,6 +271,7 @@ def generate_site():
                     control=control,
                     parent_control=parent_control,
                     child_controls=child_controls,
+                    log_schemas=logschema_by_control.get(cid, []),
                 )
                 filename = safe_filename(cid) + ".html"
                 path = os.path.join(DOCS_DIR, "controls", filename)
@@ -267,6 +334,14 @@ def generate_site():
         shutil.copy2(nist_mapping_path, os.path.join(DOCS_DIR, "data", "nist_mapping.json"))
     else:
         print("Skipping NIST dashboard (nist_mapping.json not found)")
+
+    # Copy log schema mapping data if exists
+    if os.path.isdir(LOGSCHEMA_DIR):
+        ls_dest = os.path.join(DOCS_DIR, "data", "log_schema_mappings")
+        os.makedirs(ls_dest, exist_ok=True)
+        for fn in os.listdir(LOGSCHEMA_DIR):
+            if fn.endswith(".json"):
+                shutil.copy2(os.path.join(LOGSCHEMA_DIR, fn), os.path.join(ls_dest, fn))
 
     # Generate sitemap.xml
     print("Generating sitemap...")

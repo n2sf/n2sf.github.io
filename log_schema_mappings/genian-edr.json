@@ -1,0 +1,254 @@
+{
+  "app": {
+    "name": "지니안 EDR",
+    "description": "지니안 EDR 앱은 엔드포인트에 대한 위협, 행위, 감사 로그를 정규화하여 수집하고, 유출 탐지 시나리오와 대시보드를 제공합니다.",
+    "tags": "#EDR"
+  },
+  "schemas": {
+    "genian-edr-audit": {
+      "ko_subject": "지니안 EDR 감사 로그",
+      "ko_summary": "지니안 EDR의 감사 로그를 정규화합니다."
+    },
+    "genian-edr-dns": {
+      "ko_subject": "지니안 EDR DNS 로그",
+      "ko_summary": "지니안 EDR의 DNS 로그를 정규화합니다."
+    },
+    "genian-edr-file": {
+      "ko_subject": "지니안 EDR 파일 로그",
+      "ko_summary": "지니안 EDR의 파일 로그를 정규화합니다."
+    },
+    "genian-edr-module": {
+      "ko_subject": "지니안 EDR 모듈 로그",
+      "ko_summary": "지니안 EDR의 모듈 로그를 정규화합니다."
+    },
+    "genian-edr-network": {
+      "ko_subject": "지니안 EDR 네트워크 로그",
+      "ko_summary": "지니안 EDR의 네트워크 통신 로그를 정규화합니다."
+    },
+    "genian-edr-process": {
+      "ko_subject": "지니안 EDR 프로세스 로그",
+      "ko_summary": "지니안 EDR의 프로세스 로그를 정규화합니다."
+    },
+    "genian-edr-reg": {
+      "ko_subject": "지니안 EDR 레지스트리 로그",
+      "ko_summary": "지니안 EDR의 레지스트리 로그를 정규화합니다."
+    },
+    "genian-edr-threat": {
+      "ko_subject": "지니안 EDR 위협 로그",
+      "ko_summary": "지니안 EDR의 위협 로그를 정규화합니다."
+    }
+  },
+  "mappings": {
+    "genian-edr-audit": [
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "medium",
+        "rationale": "사용자, IP, MAC, 메시지 기반으로 비정상 계정 사용 패턴이나 의심스러운 활동을 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "high",
+        "rationale": "EDR 감사 로그의 계정, 출발지 IP/MAC, 로그유형 정보를 통해 내부 사용자의 단말 기반 활동을 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-M2",
+        "relevance": "high",
+        "rationale": "감사 로그 자체가 사용자 계정과 단말에서 발생한 활동 기록을 생성·보관하므로 계정 활동 감사기록 생성 통제를 직접 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "감사 로그에 관리자 계정 관련 행위가 포함되는 경우 관리자 권한 실행 내역의 로깅 및 사후 감사를 지원할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-M2",
+        "relevance": "medium",
+        "rationale": "주요 사용자 계정의 단말 행위와 감사 이벤트를 추적하여 권한 오남용이나 이상 징후를 모니터링하는 근거로 활용할 수 있다."
+      }
+    ],
+    "genian-edr-module": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "호스트별 사용자 로그온 ID와 프로세스·파일 행위를 연계하면 내부 사용자의 계정 활동과 이상 행위를 지속적으로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "EDR 모듈 로그의 프로세스, 파일 경로, 해시(MD5/SHA256), 이벤트 분류 정보로 악성코드 실행·감염 징후를 직접 탐지하고 추적할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "high",
+        "rationale": "프로세스명, 실행 경로, 파일 해시를 통해 엔드포인트에서 비인가 소프트웨어의 실행 여부를 식별하고 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "로그온 ID와 프로세스 실행 이벤트를 통해 엔드포인트에서 관리자 권한으로 수행된 실행 행위를 감사하는 근거 로그로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "medium",
+        "rationale": "프로세스 실행 주체와 이미지 경로, 로그온 ID를 분석하면 사용자 권한 기반 코드 실행 및 의심스러운 권한 오남용 행위를 점검하는 데 도움이 된다."
+      }
+    ],
+    "genian-edr-process": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "high",
+        "rationale": "proc_user_id, logon_id, session_id 기반으로 내부 사용자의 프로세스 실행 행위와 이상 활동을 지속적으로 추적할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "EDR 프로세스 로그는 악성 프로세스 실행, 비정상 부모-자식 체인, 의심 명령줄 등을 탐지해 악성코드 감염 징후 확인에 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-8",
+        "relevance": "high",
+        "rationale": "프로세스명, 경로, 해시(MD5/SHA256) 정보를 이용해 승인되지 않은 소프트웨어의 실행 여부를 식별하고 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "high",
+        "rationale": "프로세스 권한, 실행 사용자, 명령줄, 부모·자식 관계를 통해 관리자 권한으로 실행된 기능과 행위를 엔드포인트에서 직접 감사할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "high",
+        "rationale": "integrity_level, is_system, cmd_line, image_path 등의 프로세스 실행 정보를 분석하면 과도한 권한 실행이나 권한 상승 의심 행위를 모니터링할 수 있다."
+      }
+    ],
+    "genian-edr-reg": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "사용자 로그온ID와 연계된 레지스트리 수정 행위를 수집하므로 내부 사용자의 비정상 행위나 정책 위반 활동을 지속 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "악성코드가 지속성 확보나 보안설정 약화를 위해 수행하는 레지스트리 변조 행위를 EDR 레지스트리 로그로 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-5",
+        "relevance": "high",
+        "rationale": "엔드포인트의 레지스트리 키·값 변경 이력을 프로세스와 함께 기록하므로 인가되지 않은 시스템 구성 변경 시도를 직접 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-6",
+        "relevance": "medium",
+        "rationale": "자동실행, 서비스, 정책 관련 레지스트리 변경을 분석하면 불필요하거나 비활성화되어야 할 구성요소의 활성화 여부를 점검할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "관리자 권한이 필요한 주요 레지스트리 변경 행위를 프로세스, 로그온ID와 함께 추적해 관리자 행위 감사에 활용할 수 있다."
+      }
+    ],
+    "genian-edr-network": [
+      {
+        "n2sf_id": "N2SF-AC-M3",
+        "relevance": "medium",
+        "rationale": "logon_id와 프로세스별 연결·종료 이력을 통해 사용자 세션 중 발생한 네트워크 활동을 추적하여 비정상 세션 행위 감사에 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "엔드포인트별 프로세스의 외부 발신 통신 대상, 포트, 전송량을 확인할 수 있어 위협성 outbound 통신 탐지와 발신 주체 식별에 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-7",
+        "relevance": "high",
+        "rationale": "호스트 단위에서 어떤 프로세스가 어떤 원격지와 통신했는지 기록하므로 호스트 기반 경계 보호 정책의 적용 여부와 이상 통신을 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "EDR 네트워크 로그는 비정상 원격지 접속, 비인가 포트 사용, 과다 송수신 등 외부 경계 이상행위를 자동 탐지하는 근거 데이터로 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "프로세스·방향·원격지·바이트 수 기반으로 정책 우회나 비정상 정보흐름을 탐지할 수 있어 비인가 흐름 탐지 자동화를 지원한다."
+      }
+    ],
+    "genian-edr-file": [
+      {
+        "n2sf_id": "N2SF-DU-M2",
+        "relevance": "high",
+        "rationale": "파일명·경로·해시·생성/수정시각과 프로세스 정보를 통해 엔드포인트에서 주요 데이터의 생성·수정·이동 행위를 감사하고 이상 사용을 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-15",
+        "relevance": "high",
+        "rationale": "MD5와 SHA256 해시값이 포함되어 파일 및 구성요소의 무결성 검증 여부를 직접 확인하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "EDR 파일 로그는 의심 파일의 해시, 경로, 실행 프로세스 연계를 제공하므로 악성코드 유입 및 실행 흔적을 탐지·분석하는 데 직접적이다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "medium",
+        "rationale": "엔드포인트에 생성·변경·존재하는 파일과 관련 프로세스를 분석하면 비인가 소프트웨어나 의심 구성요소 식별을 지원할 수 있다."
+      }
+    ],
+    "genian-edr-dns": [
+      {
+        "n2sf_id": "N2SF-EB-14",
+        "relevance": "high",
+        "rationale": "엔드포인트의 DNS 질의 대상과 응답을 프로세스 단위로 확인할 수 있어 인가되지 않은 외부 DNS 서버 사용 여부를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "악성 프로세스의 C2 도메인 조회나 위협 도메인 질의를 호스트·프로세스 기준으로 식별해 외부 위협 통신 발신 징후를 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "DNS 로그의 도메인, 원격지 IP, 프로세스 정보를 활용해 DGA, 위협 인텔 매칭 등 이상 외부 통신을 자동 탐지하는 데 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "엔드포인트에서 발생한 비정상 DNS 질의 흐름을 분석해 정책 우회성 정보흐름이나 비인가 외부 흐름을 자동 탐지하는 근거로 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "medium",
+        "rationale": "DNS 요청을 발생시킨 프로세스명과 경로를 통해 악성코드의 도메인 접속 행위를 추적하여 감염 징후 탐지와 대응을 지원할 수 있다."
+      }
+    ],
+    "genian-edr-threat": [
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "원격 IP·포트, 방향, 프로토콜, 프로세스 정보를 통해 엔드포인트의 외부 위협 통신 발신 행위와 해당 발신 주체를 식별할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "위협 점수, ML 점수, 탐지 유형, 자동해결 여부가 포함되어 있어 외부 통신 기반 이상행위의 자동 탐지 체계 운영을 뒷받침한다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "프로세스별 네트워크 연결과 위협 탐지 이벤트를 분석하면 정책 우회나 비정상 정보흐름 시도를 자동으로 식별하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-16",
+        "relevance": "high",
+        "rationale": "EDR 위협 로그는 악성코드 탐지분류, 패턴명, 해시, 대응 결과를 제공하므로 엔드포인트의 악성코드 감염 탐지·차단 운영 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-5",
+        "relevance": "medium",
+        "rationale": "명령줄, 프로세스명, 경로, 해시 기반의 위협 탐지 로그는 비정상 코드 실행이나 권한 오남용이 의심되는 실행 행위를 모니터링하는 근거가 된다."
+      }
+    ]
+  }
+}

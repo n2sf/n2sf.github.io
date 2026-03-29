@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "eWalker SWG",
+    "description": "eWalker SWG 앱은 웹 프록시 로그에 대한 전용 파서, 수집 모델, 대시보드를 제공합니다. ",
+    "tags": "#SWG"
+  },
+  "schemas": {
+    "ewalker-swg-access": {
+      "ko_subject": "eWalker SWG 액세스",
+      "ko_summary": "사용자 웹 접속 로그"
+    },
+    "ewalker-swg-ssl": {
+      "ko_subject": "eWalker SWG SSL",
+      "ko_summary": "SSL 복호화 세션 로그"
+    }
+  },
+  "mappings": {
+    "ewalker-swg-access": [
+      {
+        "n2sf_id": "N2SF-AC-3(2)",
+        "relevance": "medium",
+        "rationale": "사용자 계정별 웹 접속 대상, 시간, 전송량, 정책 위반 행위를 분석해 내부 사용자의 비정상 웹 활동을 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-5",
+        "relevance": "high",
+        "rationale": "웹 프록시 액세스 로그는 사용자별 웹 통신이 인가된 프록시를 경유했는지 직접 확인할 수 있어 통신 경유 강제화 통제 점검에 적합하다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M3",
+        "relevance": "high",
+        "rationale": "출발지IP, 사용자, URL, 정책, 대응, 상태 정보가 기록되어 외부 웹 통신 활동에 대한 감사 로그로 직접 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-6",
+        "relevance": "high",
+        "rationale": "카테고리, URL, 정책, 대응 필드를 통해 웹 요청이 필터링 규칙에 따라 허용 또는 차단되었는지 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "SWG의 허용·차단 웹 접속 로그는 정보흐름 통제 활동의 기록과 보존 여부를 확인하는 근거 데이터가 된다."
+      }
+    ],
+    "ewalker-swg-ssl": [
+      {
+        "n2sf_id": "N2SF-EB-15",
+        "relevance": "medium",
+        "rationale": "도메인, TLS 버전·암호군, TLS 지문, BYPASS/FAIL 사유를 분석하면 우회 통신이나 비정상 TLS 사용 징후를 탐지하는 데 활용할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-5",
+        "relevance": "medium",
+        "rationale": "출발지IP, 목적지IP, 도메인, 대응 결과를 통해 웹 트래픽이 SWG 프록시를 경유하며 처리되었는지 운영상 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "medium",
+        "rationale": "비정상 인증서 상태, 취약 TLS 버전, 반복 실패 사유 등의 패턴을 기반으로 외부 경계의 이상 웹 통신을 자동 탐지하는 데 지원된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-2",
+        "relevance": "high",
+        "rationale": "SWG의 SSL 복호화 세션 로그는 복호화 성공·우회·실패와 TLS/인증서 상태를 기록하므로 암호화된 정보흐름의 검사·통제 적용 여부를 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "high",
+        "rationale": "이 로그는 SSL 세션별 허용·우회·실패와 인증서 검증 결과를 남기므로 정보흐름 통제 활동의 기록·보존 근거로 직접 활용된다."
+      }
+    ]
+  }
+}

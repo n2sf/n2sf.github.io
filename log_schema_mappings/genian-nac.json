@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "지니안 NAC",
+    "description": "지니안 NAC 앱은 자산별 IP 주소, 운영체제, 열려 있는 포트, CVE 취약점 등 다양한 정보를 제공하고, 자산 현황 및 이벤트 대시보드, 자동화된 네트워크 격리 기능을 지원합니다.  ",
+    "tags": "#NAC"
+  },
+  "schemas": {
+    "genian-nac-audit": {
+      "ko_subject": "지니안 NAC 감사 로그 ",
+      "ko_summary": "지니안 NAC 감사 로그"
+    }
+  },
+  "mappings": {
+    "genian-nac-audit": [
+      {
+        "n2sf_id": "N2SF-DA-3",
+        "relevance": "high",
+        "rationale": "출발지 IP·MAC, 사용자, 센서 정보와 감사 메시지를 통해 단말 식별 및 NAC 기반 인증·접속 이력을 직접 확인할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-DA-3(2)",
+        "relevance": "high",
+        "rationale": "감사 로그의 정책·알람·노드상태 정보는 비인가 단말의 접속 차단 또는 격리 조치 발생 여부를 모니터링하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-DA-4",
+        "relevance": "high",
+        "rationale": "사용자, 부서, 단말 식별자와 상태 변화 로그를 통해 인증된 단말의 접속 이력과 정책 적용 결과를 감사할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-IN-2",
+        "relevance": "medium",
+        "rationale": "네트워크정보·시스템정보·알람 분류의 감사 로그는 네트워크에 새로 나타난 비인가 자산이나 이상 노드를 식별하는 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IS-6",
+        "relevance": "medium",
+        "rationale": "NAC의 정책 및 알람 감사 로그는 격리 정책 위반 탐지와 자동 격리 같은 대응 조치의 수행 여부를 확인하는 데 도움을 준다."
+      }
+    ]
+  }
+}

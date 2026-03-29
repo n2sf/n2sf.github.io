@@ -1,0 +1,42 @@
+{
+  "app": {
+    "name": "윈도우 이벤트 로그",
+    "description": "윈도우 이벤트 로그 앱은 윈도우 이벤트 로그 기반 탐지 시나리오를 제공합니다. ",
+    "tags": "#Windows"
+  },
+  "schemas": {
+    "winevent": {
+      "ko_subject": "윈도우 이벤트",
+      "ko_summary": "윈도우 XML 이벤트"
+    }
+  },
+  "mappings": {
+    "winevent": [
+      {
+        "n2sf_id": "N2SF-AC-1(2)",
+        "relevance": "high",
+        "rationale": "윈도우 이벤트 로그는 계정 생성·수정·활성화·비활성화·삭제 관련 보안 이벤트를 기록하므로 계정 상태 변화를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-AC-3",
+        "relevance": "high",
+        "rationale": "로그온 성공·실패와 계정 관련 보안 이벤트를 통해 비정상적이거나 의심스러운 계정 활동을 지속적으로 탐지할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LI-M1",
+        "relevance": "high",
+        "rationale": "반복 로그인 실패, 잠금, 인증 오류 등의 윈도우 이벤트를 분석하면 실패 로그인 패턴을 실시간 모니터링하고 보고할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-LP-4(4)",
+        "relevance": "medium",
+        "rationale": "특권 계정의 로그온, 권한 사용, 관리자 그룹 변경 등의 이벤트를 통해 관리자 권한 실행 내역 감사에 필요한 근거를 제공한다."
+      },
+      {
+        "n2sf_id": "N2SF-RA-M2",
+        "relevance": "medium",
+        "rationale": "원격 로그온 유형과 관련 이벤트가 포함될 경우 원격접속 활동 기록을 수집·보존하여 사후 감사에 활용할 수 있다."
+      }
+    ]
+  }
+}

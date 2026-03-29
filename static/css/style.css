@@ -583,6 +583,20 @@ body.no-sidebar .footer {
   font-size: 9px;
 }
 
+.matrix-cell .cell-apps {
+  display: flex;
+  gap: 2px;
+  margin-top: 3px;
+  flex-wrap: wrap;
+}
+
+.app-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
 .matrix-cell.hidden { display: none; }
 
 .matrix-sub-group.hidden { display: none; }
@@ -754,6 +768,77 @@ body.no-sidebar .footer {
 .related-control-link:hover {
   background: #c5cae9;
   text-decoration: none;
+}
+
+/* ---- Log Schema Section ---- */
+.log-schema-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.log-schema-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid var(--color-border);
+  margin-bottom: 6px;
+  transition: background 0.15s;
+}
+
+.log-schema-link:hover {
+  background: var(--color-hover);
+  text-decoration: none;
+}
+
+.log-schema-link .app-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.log-schema-name {
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.log-schema-link .relevance-tag {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.log-schema-link .relevance-tag.high {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.log-schema-link .relevance-tag.medium {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.log-schema-link .relevance-tag.low {
+  background: #F5F5F5;
+  color: #999;
+}
+
+.log-schema-rationale {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ---- Search & Filter ---- */

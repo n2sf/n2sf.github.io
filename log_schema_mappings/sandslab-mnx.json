@@ -1,0 +1,73 @@
+{
+  "app": {
+    "name": "MNX",
+    "description": "MNX 앱은 샌즈랩 MNX 로그에 대한 전용 로그 파서, 수집 모델, 대시보드를 제공합니다.",
+    "tags": "#NDR"
+  },
+  "schemas": {
+    "mnx-dns": {
+      "ko_subject": "MNX DNS",
+      "ko_summary": "MNX DNS 메타"
+    },
+    "mnx-http": {
+      "ko_subject": "MNX HTTP",
+      "ko_summary": "MNX HTTP 메타"
+    }
+  },
+  "mappings": {
+    "mnx-dns": [
+      {
+        "n2sf_id": "N2SF-EB-14",
+        "relevance": "high",
+        "rationale": "DNS 질의의 출발지·목적지 IP와 목적지 포트(53)를 통해 인가된 DNS 서버 외부로의 질의 여부를 직접 모니터링할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "내부 자산의 DNS 질의 대상 도메인, 응답 IP, 국가·ASN 정보를 분석해 C2·피싱·악성 도메인 등 외부 위협 통신 발신을 탐지하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M3",
+        "relevance": "medium",
+        "rationale": "출발지·목적지·도메인·응답 IP가 포함된 DNS 메타 로그는 외부 통신 이력의 기록과 사후 감사 증적으로 활용 가능하다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "NDR의 DNS 메타데이터는 비정상 도메인 질의, 희귀 TLD, 해외 ASN 통신 등 외부 경계 이상행위를 자동 탐지하는 핵심 근거가 된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "medium",
+        "rationale": "DNS 질의 흐름을 기반으로 정책 우회성 도메인 접근이나 비정상 정보흐름 패턴을 자동 식별하여 비인가 흐름 탐지에 보조적으로 활용할 수 있다."
+      }
+    ],
+    "mnx-http": [
+      {
+        "n2sf_id": "N2SF-EB-6",
+        "relevance": "high",
+        "rationale": "출발지/목적지 IP, HTTP 요청 경로, 공격·봇 분류와 CVE 정보로 내부 자산의 외부 위협 발신 통신 여부를 직접 탐지하고 식별할 수 있다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M3",
+        "relevance": "high",
+        "rationale": "이 로그는 외부와의 HTTP 통신에 대한 세션, 주소, 메서드, 상태코드, 전송량을 기록하므로 외부 통신 감사 증적으로 활용 가능하다."
+      },
+      {
+        "n2sf_id": "N2SF-EB-M4",
+        "relevance": "high",
+        "rationale": "NDR의 HTTP 메타와 ML 기반 bot/anomaly/attack 분류값은 외부 경계에서의 이상 웹 통신을 자동 탐지하는 데 직접 활용된다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M2",
+        "relevance": "medium",
+        "rationale": "HTTP 세션의 출발지·목적지, 요청 내용, 바이트 수집 정보는 정보흐름 활동의 기록·보존을 지원한다."
+      },
+      {
+        "n2sf_id": "N2SF-IF-M4",
+        "relevance": "high",
+        "rationale": "세션별 HTTP 메타데이터와 이상·공격 태그를 분석하면 정책 우회나 비정상 정보흐름을 자동으로 탐지할 수 있다."
+      }
+    ]
+  }
+}
